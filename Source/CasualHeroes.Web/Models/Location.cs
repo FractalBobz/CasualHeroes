@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace CasualHeroes.Models
+namespace CasualHeroes.Web.Models
 {
 	public class Location
 	{
