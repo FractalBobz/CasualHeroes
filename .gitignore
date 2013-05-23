@@ -1,4 +1,7 @@
-Source/CasualHeroes/bin/
+Source/CasualHeroes/bin/Debug/CasualHeroes.dll
+Source/CasualHeroes/bin/Debug/CasualHeroes.pdb
+Source/CasualHeroes/bin/Release/CasualHeroes.dll
+Source/CasualHeroes/bin/Release/CasualHeroes.pdb
 Source/CasualHeroes/obj/
 Source/CasualHeroes.Tests/bin/
 Source/CasualHeroes.Tests/obj/
