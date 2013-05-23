@@ -1,0 +1,8 @@
+D:\Source\GitHub\CasualHeroes\Source\CasualHeroes.Web.Models\bin\Debug\CasualHeroes.Web.Models.dll.config
+D:\Source\GitHub\CasualHeroes\Source\CasualHeroes.Web.Models\bin\Debug\CasualHeroes.Web.Models.dll
+D:\Source\GitHub\CasualHeroes\Source\CasualHeroes.Web.Models\bin\Debug\CasualHeroes.Web.Models.pdb
+D:\Source\GitHub\CasualHeroes\Source\CasualHeroes.Web.Models\bin\Debug\EntityFramework.dll
+D:\Source\GitHub\CasualHeroes\Source\CasualHeroes.Web.Models\bin\Debug\EntityFramework.xml
+D:\Source\GitHub\CasualHeroes\Source\CasualHeroes.Web.Models\obj\Debug\CasualHeroes.Web.Models.csprojResolveAssemblyReference.cache
+D:\Source\GitHub\CasualHeroes\Source\CasualHeroes.Web.Models\obj\Debug\CasualHeroes.Web.Models.dll
+D:\Source\GitHub\CasualHeroes\Source\CasualHeroes.Web.Models\obj\Debug\CasualHeroes.Web.Models.pdb

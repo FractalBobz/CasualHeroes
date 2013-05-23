@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CasualHeroes.Web.Models;
+using System.Data.SqlClient;
 
 namespace CasualHeroes.Web.Controllers
 {
@@ -12,7 +13,7 @@ namespace CasualHeroes.Web.Controllers
         //
         // GET: /Requests/
 
-        public ActionResult Index(decimal latitude, decimal longitude)
+		public ActionResult Index(double latitude, double longitude)
 		{
 			var random = new Random();
 			var resultCount = random.Next(10);
@@ -23,24 +24,19 @@ namespace CasualHeroes.Web.Controllers
 				{
 					Latitude = latitude + random.Next(60) - 30,
 					Longitude = longitude + random.Next(60) - 30,
-					AddressLine1 = "45 Street St",
-					AddressLine2 = "City, Province, Country",
-					StartTime = DateTime.Now,
-					EndTime = DateTime.Now.AddDays(1),
-					Owner = new User
+					Address = "Add",
+					StartDate = DateTime.Now,
+					EndDate = DateTime.Now.AddDays(1),
+					User = new User
 					{
-						Latitude = latitude + random.Next(60) - 30,
-						Longitude = longitude + random.Next(60) - 30,
-						AddressLine1 = "45 Street St",
-						AddressLine2 = "City, Province, Country",
-						GivenName = "John",
-						FamilyName = "Smith",
+						FirstName = "John",
+						LastName = "Smith",
 						Email = "jsmith@casual-heroes.org",
-						Phone = "987-654-3210"
+						PhoneNumber = "987-654-3210"
 					},
 					Title = "Title",
 					Description = "Description",
-					Tags = new List<string> { "Awesomeness", "Wizardry", "Aloof Demeanor" }
+					Tags = "Awesomeness, Wizardry, Aloof Demeanor" //new List<string> { "Awesomeness", "Wizardry", "Aloof Demeanor" }
 				});
 			}
 			return View(results);
@@ -56,24 +52,19 @@ namespace CasualHeroes.Web.Controllers
 			{
 				Latitude = random.Next(60) - 30,
 				Longitude = random.Next(60) - 30,
-				AddressLine1 = "45 Street St",
-				AddressLine2 = "City, Province, Country",
-				StartTime = DateTime.Now,
-				EndTime = DateTime.Now.AddDays(1),
-				Owner = new User
+				Address = "Address",
+				StartDate = DateTime.Now,
+				EndDate = DateTime.Now.AddDays(1),
+				User = new User
 				{
-					Latitude = random.Next(60) - 30,
-					Longitude = random.Next(60) - 30,
-					AddressLine1 = "45 Street St",
-					AddressLine2 = "City, Province, Country",
-					GivenName = "John",
-					FamilyName = "Smith",
+					FirstName = "John",
+					LastName = "Smith",
 					Email = "jsmith@casual-heroes.org",
-					Phone = "987-654-3210"
+					PhoneNumber = "987-654-3210"
 				},
 				Title = "Title",
 				Description = "Description",
-				Tags = new List<string> { "Awesomeness", "Wizardry", "Aloof Demeanor" }
+				Tags = "Awesomeness, Wizardry, Aloof Demeanor" //new List<string> { "Awesomeness", "Wizardry", "Aloof Demeanor" }
 			};
 			return View(request);
         }

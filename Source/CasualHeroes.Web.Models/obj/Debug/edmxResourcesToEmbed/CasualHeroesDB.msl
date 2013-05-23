@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="casualheroes_dbModelStoreContainer" CdmEntityContainer="casualheroes_dbEntities1">
+    <EntitySetMapping Name="AcceptedRequests">
+      <EntityTypeMapping TypeName="casualheroes_dbModel.AcceptedRequest">
+        <MappingFragment StoreEntitySet="AcceptedRequests">
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ratings">
+      <EntityTypeMapping TypeName="casualheroes_dbModel.Rating">
+        <MappingFragment StoreEntitySet="Ratings">
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Requests">
+      <EntityTypeMapping TypeName="casualheroes_dbModel.Request">
+        <MappingFragment StoreEntitySet="Requests">
+          <ScalarProperty Name="RequestId" ColumnName="id" />
+          <ScalarProperty Name="UserId" ColumnName="userId" />
+          <ScalarProperty Name="Title" ColumnName="title" />
+          <ScalarProperty Name="Description" ColumnName="description" />
+          <ScalarProperty Name="Address" ColumnName="address" />
+          <ScalarProperty Name="Latitude" ColumnName="latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="longitude" />
+          <ScalarProperty Name="Tags" ColumnName="tags" />
+          <ScalarProperty Name="StartDate" ColumnName="startDate" />
+          <ScalarProperty Name="EndDate" ColumnName="endDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="createdBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="createdOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RequestTags">
+      <EntityTypeMapping TypeName="casualheroes_dbModel.RequestTag">
+        <MappingFragment StoreEntitySet="RequestTags">
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tags">
+      <EntityTypeMapping TypeName="casualheroes_dbModel.Tag">
+        <MappingFragment StoreEntitySet="Tags">
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="casualheroes_dbModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="UserId" ColumnName="id" />
+          <ScalarProperty Name="Identifier" ColumnName="identifier" />
+          <ScalarProperty Name="Email" ColumnName="email" />
+          <ScalarProperty Name="FirstName" ColumnName="firstName" />
+          <ScalarProperty Name="LastName" ColumnName="lastName" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="phoneNumber" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserTags">
+      <EntityTypeMapping TypeName="casualheroes_dbModel.UserTag">
+        <MappingFragment StoreEntitySet="UserTags">
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

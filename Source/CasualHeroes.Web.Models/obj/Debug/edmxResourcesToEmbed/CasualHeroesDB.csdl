@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="casualheroes_dbModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="casualheroes_dbEntities1" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="AcceptedRequests" EntityType="casualheroes_dbModel.AcceptedRequest" />
+    <EntitySet Name="Ratings" EntityType="casualheroes_dbModel.Rating" />
+    <EntitySet Name="Requests" EntityType="casualheroes_dbModel.Request" />
+    <EntitySet Name="RequestTags" EntityType="casualheroes_dbModel.RequestTag" />
+    <EntitySet Name="Tags" EntityType="casualheroes_dbModel.Tag" />
+    <EntitySet Name="Users" EntityType="casualheroes_dbModel.User" />
+    <EntitySet Name="UserTags" EntityType="casualheroes_dbModel.UserTag" />
+    <AssociationSet Name="UserRequest" Association="casualheroes_dbModel.UserRequest">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Request" EntitySet="Requests" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="AcceptedRequest">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="Rating">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="Request">
+    <Key>
+      <PropertyRef Name="RequestId" />
+    </Key>
+    <Property Name="RequestId" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int64" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Address" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Latitude" Type="Double" />
+    <Property Name="Longitude" Type="Double" />
+    <Property Name="Tags" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="StartDate" Type="DateTimeOffset" Precision="3" />
+    <Property Name="EndDate" Type="DateTimeOffset" Precision="3" />
+    <Property Name="CreatedBy" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="CreatedOn" Type="DateTimeOffset" Precision="3" />
+    <NavigationProperty Name="User" Relationship="casualheroes_dbModel.UserRequest" FromRole="Request" ToRole="User" />
+  </EntityType>
+  <EntityType Name="RequestTag">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="Tag">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Identifier" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Email" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="FirstName" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="LastName" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Requests" Relationship="casualheroes_dbModel.UserRequest" FromRole="User" ToRole="Request" />
+  </EntityType>
+  <EntityType Name="UserTag">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <Association Name="UserRequest">
+    <End Type="casualheroes_dbModel.User" Role="User" Multiplicity="1" />
+    <End Type="casualheroes_dbModel.Request" Role="Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

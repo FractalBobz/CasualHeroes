@@ -116,9 +116,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Request.cs" />
-    <Compile Include="Models\User.cs" />
-    <Compile Include="Models\Volunteer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -165,6 +162,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Requests\Details.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CasualHeroes.Web.Models\CasualHeroes.Web.Models.csproj">
+      <Project>{58d3d914-e5b2-494f-8998-3a77462b7e10}</Project>
+      <Name>CasualHeroes.Web.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

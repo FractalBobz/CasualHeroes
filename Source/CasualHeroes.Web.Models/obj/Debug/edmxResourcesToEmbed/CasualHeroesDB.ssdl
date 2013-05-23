@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="casualheroes_dbModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="casualheroes_dbModelStoreContainer">
+    <EntitySet Name="AcceptedRequests" EntityType="casualheroes_dbModel.Store.AcceptedRequests" store:Type="Tables" Schema="casualheroes" />
+    <EntitySet Name="Ratings" EntityType="casualheroes_dbModel.Store.Ratings" store:Type="Tables" Schema="casualheroes" />
+    <EntitySet Name="Requests" EntityType="casualheroes_dbModel.Store.Requests" store:Type="Tables" Schema="casualheroes" />
+    <EntitySet Name="RequestTags" EntityType="casualheroes_dbModel.Store.RequestTags" store:Type="Tables" Schema="casualheroes" />
+    <EntitySet Name="Tags" EntityType="casualheroes_dbModel.Store.Tags" store:Type="Tables" Schema="casualheroes" />
+    <EntitySet Name="Users" EntityType="casualheroes_dbModel.Store.Users" store:Type="Tables" Schema="casualheroes" />
+    <EntitySet Name="UserTags" EntityType="casualheroes_dbModel.Store.UserTags" store:Type="Tables" Schema="casualheroes" />
+  </EntityContainer>
+  <EntityType Name="AcceptedRequests">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="Ratings">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="Requests">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="userId" Type="bigint" />
+    <Property Name="title" Type="nvarchar(max)" />
+    <Property Name="description" Type="nvarchar(max)" />
+    <Property Name="address" Type="nvarchar(max)" />
+    <Property Name="latitude" Type="float" />
+    <Property Name="longitude" Type="float" />
+    <Property Name="tags" Type="nvarchar(max)" />
+    <Property Name="startDate" Type="datetimeoffset" Precision="3" />
+    <Property Name="endDate" Type="datetimeoffset" Precision="3" />
+    <Property Name="createdBy" Type="nvarchar(max)" />
+    <Property Name="createdOn" Type="datetimeoffset" Precision="3" />
+  </EntityType>
+  <EntityType Name="RequestTags">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="Tags">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="identifier" Type="nvarchar(max)" />
+    <Property Name="email" Type="nvarchar(max)" />
+    <Property Name="firstName" Type="nvarchar(max)" />
+    <Property Name="lastName" Type="nvarchar(max)" />
+    <Property Name="phoneNumber" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="UserTags">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+  </EntityType>
+</Schema>

@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="casualheroes_dbModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="casualheroes_dbModelStoreContainer">
+          <EntitySet Name="AcceptedRequests" EntityType="casualheroes_dbModel.Store.AcceptedRequests" store:Type="Tables" Schema="casualheroes" />
+          <EntitySet Name="Ratings" EntityType="casualheroes_dbModel.Store.Ratings" store:Type="Tables" Schema="casualheroes" />
+          <EntitySet Name="Requests" EntityType="casualheroes_dbModel.Store.Requests" store:Type="Tables" Schema="casualheroes" />
+          <EntitySet Name="RequestTags" EntityType="casualheroes_dbModel.Store.RequestTags" store:Type="Tables" Schema="casualheroes" />
+          <EntitySet Name="Tags" EntityType="casualheroes_dbModel.Store.Tags" store:Type="Tables" Schema="casualheroes" />
+          <EntitySet Name="Users" EntityType="casualheroes_dbModel.Store.Users" store:Type="Tables" Schema="casualheroes" />
+          <EntitySet Name="UserTags" EntityType="casualheroes_dbModel.Store.UserTags" store:Type="Tables" Schema="casualheroes" />
+        </EntityContainer>
+        <EntityType Name="AcceptedRequests">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Ratings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Requests">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="userId" Type="bigint" />
+          <Property Name="title" Type="nvarchar(max)" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="address" Type="nvarchar(max)" />
+          <Property Name="latitude" Type="float" />
+          <Property Name="longitude" Type="float" />
+          <Property Name="tags" Type="nvarchar(max)" />
+          <Property Name="startDate" Type="datetimeoffset" Precision="3" />
+          <Property Name="endDate" Type="datetimeoffset" Precision="3" />
+          <Property Name="createdBy" Type="nvarchar(max)" />
+          <Property Name="createdOn" Type="datetimeoffset" Precision="3" />
+        </EntityType>
+        <EntityType Name="RequestTags">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Tags">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="identifier" Type="nvarchar(max)" />
+          <Property Name="email" Type="nvarchar(max)" />
+          <Property Name="firstName" Type="nvarchar(max)" />
+          <Property Name="lastName" Type="nvarchar(max)" />
+          <Property Name="phoneNumber" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="UserTags">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+        </EntityType>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="casualheroes_dbModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="casualheroes_dbEntities1" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="AcceptedRequests" EntityType="casualheroes_dbModel.AcceptedRequest" />
+          <EntitySet Name="Ratings" EntityType="casualheroes_dbModel.Rating" />
+          <EntitySet Name="Requests" EntityType="casualheroes_dbModel.Request" />
+          <EntitySet Name="RequestTags" EntityType="casualheroes_dbModel.RequestTag" />
+          <EntitySet Name="Tags" EntityType="casualheroes_dbModel.Tag" />
+          <EntitySet Name="Users" EntityType="casualheroes_dbModel.User" />
+          <EntitySet Name="UserTags" EntityType="casualheroes_dbModel.UserTag" />
+          <AssociationSet Name="UserRequest" Association="casualheroes_dbModel.UserRequest">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Request" EntitySet="Requests" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="AcceptedRequest">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Rating">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="RequestId" />
+          </Key>
+          <Property Name="RequestId" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Latitude" Type="Double" />
+          <Property Name="Longitude" Type="Double" />
+          <Property Name="Tags" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="StartDate" Type="DateTimeOffset" Precision="3" />
+          <Property Name="EndDate" Type="DateTimeOffset" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="CreatedOn" Type="DateTimeOffset" Precision="3" />
+          <NavigationProperty Name="User" Relationship="casualheroes_dbModel.UserRequest" FromRole="Request" ToRole="User" />
+        </EntityType>
+        <EntityType Name="RequestTag">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Identifier" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Email" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="FirstName" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="LastName" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Requests" Relationship="casualheroes_dbModel.UserRequest" FromRole="User" ToRole="Request" />
+        </EntityType>
+        <EntityType Name="UserTag">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <Association Name="UserRequest">
+          <End Type="casualheroes_dbModel.User" Role="User" Multiplicity="1" />
+          <End Type="casualheroes_dbModel.Request" Role="Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="casualheroes_dbModelStoreContainer" CdmEntityContainer="casualheroes_dbEntities1">
+          <EntitySetMapping Name="AcceptedRequests">
+            <EntityTypeMapping TypeName="casualheroes_dbModel.AcceptedRequest">
+              <MappingFragment StoreEntitySet="AcceptedRequests">
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ratings">
+            <EntityTypeMapping TypeName="casualheroes_dbModel.Rating">
+              <MappingFragment StoreEntitySet="Ratings">
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Requests">
+            <EntityTypeMapping TypeName="casualheroes_dbModel.Request">
+              <MappingFragment StoreEntitySet="Requests">
+                <ScalarProperty Name="RequestId" ColumnName="id" />
+                <ScalarProperty Name="UserId" ColumnName="userId" />
+                <ScalarProperty Name="Title" ColumnName="title" />
+                <ScalarProperty Name="Description" ColumnName="description" />
+                <ScalarProperty Name="Address" ColumnName="address" />
+                <ScalarProperty Name="Latitude" ColumnName="latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="longitude" />
+                <ScalarProperty Name="Tags" ColumnName="tags" />
+                <ScalarProperty Name="StartDate" ColumnName="startDate" />
+                <ScalarProperty Name="EndDate" ColumnName="endDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="createdBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="createdOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequestTags">
+            <EntityTypeMapping TypeName="casualheroes_dbModel.RequestTag">
+              <MappingFragment StoreEntitySet="RequestTags">
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tags">
+            <EntityTypeMapping TypeName="casualheroes_dbModel.Tag">
+              <MappingFragment StoreEntitySet="Tags">
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="casualheroes_dbModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserId" ColumnName="id" />
+                <ScalarProperty Name="Identifier" ColumnName="identifier" />
+                <ScalarProperty Name="Email" ColumnName="email" />
+                <ScalarProperty Name="FirstName" ColumnName="firstName" />
+                <ScalarProperty Name="LastName" ColumnName="lastName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="phoneNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserTags">
+            <EntityTypeMapping TypeName="casualheroes_dbModel.UserTag">
+              <MappingFragment StoreEntitySet="UserTags">
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

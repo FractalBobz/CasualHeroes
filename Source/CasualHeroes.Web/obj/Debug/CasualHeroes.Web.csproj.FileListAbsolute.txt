@@ -52,3 +52,7 @@ D:\Source\GitHub\CasualHeroes\Source\CasualHeroes.Web\bin\System.Web.WebPages.Ra
 D:\Source\GitHub\CasualHeroes\Source\CasualHeroes.Web\obj\Debug\CasualHeroes.Web.csprojResolveAssemblyReference.cache
 D:\Source\GitHub\CasualHeroes\Source\CasualHeroes.Web\obj\Debug\CasualHeroes.Web.dll
 D:\Source\GitHub\CasualHeroes\Source\CasualHeroes.Web\obj\Debug\CasualHeroes.Web.pdb
+D:\Source\GitHub\CasualHeroes\Source\CasualHeroes.Web\bin\CasualHeroes.Web.Models.dll
+D:\Source\GitHub\CasualHeroes\Source\CasualHeroes.Web\bin\EntityFramework.dll
+D:\Source\GitHub\CasualHeroes\Source\CasualHeroes.Web\bin\CasualHeroes.Web.Models.pdb
+D:\Source\GitHub\CasualHeroes\Source\CasualHeroes.Web\bin\EntityFramework.xml

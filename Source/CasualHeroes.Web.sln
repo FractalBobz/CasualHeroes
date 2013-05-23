@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CasualHeroes.Web", "CasualHeroes.Web\CasualHeroes.Web.csproj", "{A2EC90F9-475A-46A5-B69D-752DDCA13E64}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CasualHeroes.Web.Models", "CasualHeroes.Web.Models\CasualHeroes.Web.Models.csproj", "{58D3D914-E5B2-494F-8998-3A77462B7E10}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{A2EC90F9-475A-46A5-B69D-752DDCA13E64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2EC90F9-475A-46A5-B69D-752DDCA13E64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2EC90F9-475A-46A5-B69D-752DDCA13E64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58D3D914-E5B2-494F-8998-3A77462B7E10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58D3D914-E5B2-494F-8998-3A77462B7E10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58D3D914-E5B2-494F-8998-3A77462B7E10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58D3D914-E5B2-494F-8998-3A77462B7E10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
