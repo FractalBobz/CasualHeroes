@@ -15,6 +15,7 @@ namespace CasualHeroes.Web.ViewModels
 			public string LastName { get; set; }
 			public string Email { get; set; }
 			public string PhoneNumber { get; set; }
+			public string DetailsUrl { get; set; }
 
 			public RequestUser()
 			{
@@ -28,6 +29,7 @@ namespace CasualHeroes.Web.ViewModels
 				LastName = user.LastName;
 				Email = user.Email;
 				PhoneNumber = user.PhoneNumber;
+				DetailsUrl = "/Users/Details/" + user.UserId;
 			}
 		}
 
@@ -43,6 +45,7 @@ namespace CasualHeroes.Web.ViewModels
 		public DateTimeOffset? EndDate { get; set; }
 		public DateTimeOffset? CreatedOn { get; set; }
 		public string CreatedBy { get; set; }
+		public string DetailsUrl { get; set; }
 		
 		public static Request Convert(Models.Request request)
 		{
@@ -59,7 +62,8 @@ namespace CasualHeroes.Web.ViewModels
 				StartDate = request.StartDate,
 				EndDate = request.EndDate,
 				CreatedOn = request.CreatedOn,
-				CreatedBy = request.CreatedBy
+				CreatedBy = request.CreatedBy,
+				DetailsUrl = "/Requests/Details/" + request.RequestId
 			};
 		}
 

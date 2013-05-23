@@ -152,6 +152,8 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Requests\Create.cshtml" />
+    <Content Include="Views\Requests\Edit.cshtml" />
+    <Content Include="Views\Requests\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -164,12 +166,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Requests\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Requests\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CasualHeroes.Web.Models\CasualHeroes.Web.Models.csproj">

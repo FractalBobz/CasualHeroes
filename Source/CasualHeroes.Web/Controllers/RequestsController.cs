@@ -10,37 +10,32 @@ namespace CasualHeroes.Web.Controllers
 {
     public class RequestsController : Controller
     {
-        //
-        // GET: /Requests/
-
+		// GET: /Requests/?Latitude=5&Longitude=5
 		public ActionResult Index(double latitude, double longitude)
 		{
-			return View(ViewModels.Request.Convert(new CasualHeroesEntities().Requests
-				.Where(r => r.Latitude != null && r.Longitude != null)
-				.OrderBy(r => Math.Pow((r.Latitude.Value - latitude) * (r.Latitude.Value - latitude) + (r.Longitude.Value - longitude) * (r.Longitude.Value - longitude), 0.5))
-				.Take(10)
-			));
-        }
+			return Json(ViewModels.Request.Convert(
+				new CasualHeroesEntities().Requests
+					.Where(r => r.Latitude != null && r.Longitude != null)
+					.OrderBy(r => Math.Pow((r.Latitude.Value - latitude) * (r.Latitude.Value - latitude) + (r.Longitude.Value - longitude) * (r.Longitude.Value - longitude), 0.5))
+					.Take(10)
+				),
+				JsonRequestBehavior.AllowGet
+			);
+		}
 
-        //
         // GET: /Requests/Details/5
-
         public ActionResult Details(long id)
         {
-	        return View(ViewModels.Request.Convert(new CasualHeroesEntities().Requests.Single(r => r.RequestId == id)));
+			return Json(ViewModels.Request.Convert(new CasualHeroesEntities().Requests.Single(r => r.RequestId == id)), JsonRequestBehavior.AllowGet);
         }
 
-        //
         // GET: /Requests/Create
-
         public ActionResult Create()
         {
             return View();
         }
 
-        //
         // POST: /Requests/Create
-
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
@@ -71,55 +66,74 @@ namespace CasualHeroes.Web.Controllers
             }
         }
 
-        //
         // GET: /Requests/Edit/5
-
         public ActionResult Edit(int id)
-        {
-            return View();
+		{
+			try
+			{
+				var context = new CasualHeroesEntities();
+				var request = context.Requests.Single(r => r.RequestId == id);
+				return View(request);
+			}
+			catch (Exception)
+			{
+				return RedirectToAction("Details", new { id });
+			}
         }
 
-        //
         // POST: /Requests/Edit/5
-
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
+		{
+	        using (var context = new CasualHeroesEntities())
+	        {
+		        var request = context.Requests.Single(r => r.RequestId == id);
+		        try
+		        {
+			        request.Title = collection["Title"];
+			        request.Description = collection["Description"];
+			        request.Address = collection["Address"];
+			        request.Tags = collection["Tags"];
+			        request.Latitude = double.Parse(collection["Latitude"]);
+			        request.Longitude = double.Parse(collection["Longitude"]);
+			        request.StartDate = DateTimeOffset.Parse(collection["StartDate"]);
+			        request.EndDate = DateTimeOffset.Parse(collection["EndDate"]);
+			        request.CreatedBy = collection["CreatedBy"];
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+			        context.SaveChanges();
 
-        //
+			        return RedirectToAction("Details", new { id = request.RequestId });
+		        }
+		        catch
+		        {
+			        return View(request);
+		        }
+	        }
+		}
+
         // GET: /Requests/Delete/5
-
         public ActionResult Delete(int id)
-        {
-            return View();
+		{
+			var context = new CasualHeroesEntities();
+			var request = context.Requests.Single(r => r.RequestId == id);
+			return View(request);
         }
 
-        //
         // POST: /Requests/Delete/5
-
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
-        {
+		{
+			var context = new CasualHeroesEntities();
+			var request = context.Requests.Single(r => r.RequestId == id);
             try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
+			{
+				context.Requests.Remove(request);
+				context.SaveChanges();
+				return Json("Deleted");
+			}
             catch
             {
-                return View();
+				return View(request);
             }
         }
     }
