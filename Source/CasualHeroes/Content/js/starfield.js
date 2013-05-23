@@ -78,7 +78,10 @@ jss.b3d={
 };
 
 // App startup
+jss.b3d.isAttached=false;
 jss.b3d.attach3d=function(){
+	if(jss.b3d.isAttached)return;
+	jss.b3d.isAttached=true;
 	var b3=jss.b3d;
 	// Init WebGL context
 	b3.mCanvas.style.zIndex=-99;WD.body.appendChild(b3.mCanvas);
