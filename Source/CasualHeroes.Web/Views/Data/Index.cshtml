@@ -38,7 +38,7 @@
                 <div><label for="requestTitle">Title:</label><input id="requestTitle" type="text" value="Help needed"/></div>
                 <div><label for="requestDescription">Description:</label><input id="requestDescription" type="text" value="Help needed to code something cool."/></div>
                 <div><label for="requestAddress">Address:</label><input id="requestAddress" type="text" value="4-5 Bonhill Street, London"/></div>
-                <div><label for="requestLatLong">Lat/Long:</label><input id="requestLatLong" type="text" value="123.45:123.45"/></div>
+                <div><label for="requestLatLong">Lat/Long:</label><input id="requestLat" type="text" value="123.45"/><input id="requestLong" type="text" value="123.45"/></div>
                 <div><label for="requestStartDate">Start Date:</label><input id="requestStartDate" type="text" value=""/></div>
                 <div><label for="requestDuration">Duration (hrs):</label><input id="requestDuration" type="text" value="1"/></div>
                 <div><label for="requestTags">Tags:</label><input id="requestTags" type="text" value=""/></div>
@@ -60,15 +60,17 @@
             $.userTable = $.mobileClient.getTable("Users");
             $.requestTable = $.mobileClient.getTable("Requests");
 
-            $.requestTable.orderByDescending("createdOn").take(10).read().done(function(requests) {
-                var ul = $("<ul />");
-                for (var i = 0; i < requests.length; i++) {
-                    var request = requests[i];
-                    ul.append("<li>" + request.title + " (" + request.startDate + "-" + request.endDate + ")</li>");
-                }
-                $("#latest10Requests").html(ul);
-            });
-            
+            function updateLatest10Requests() {
+                $.requestTable.orderByDescending("createdOn").take(10).read().done(function(requests) {
+                    var ul = $("<ul />");
+                    for (var i = 0; i < requests.length; i++) {
+                        var request = requests[i];
+                        ul.append("<li>" + request.title + " (" + request.startDate + "-" + request.endDate + ")</li>");
+                    }
+                    $("#latest10Requests").html(ul);
+                });
+            }
+
             var nextDate = new Date();
             $("#requestStartDate").val(nextDate);
             
@@ -105,26 +107,28 @@
                         var endDate = startDate;
                         endDate.setHours(startDate.getHours() + parseInt($("#requestDuration").val()));
 
-                        var now = new Date();
                         var request = {
-                            userId: user.id,
+                            userId: parseInt(user.id),
                             title: $("#requestTitle").val(),
                             description: $("#requestDescription").val(),
                             address: $("#requestAddress").val(),
-                            latLong: $("#requestLatLong").val(),
+                            latitude: parseFloat($("#requestLat").val()),
+                            longitude: parseFloat($("#requestLong").val()),
                             tags: $("#requestTags").val(),
                             startDate: startDate,
                             endDate: endDate
                         };
                         
                         $.requestTable.insert(request).done(function () {
-                            alert("inserted request");
+                            updateLatest10Requests();
                         });
                     } else {
                         alert("User " + usersEmail + "not found or more than one user!");
                     }
                 });
             });
+
+            updateLatest10Requests();
         });
 
     </script>
