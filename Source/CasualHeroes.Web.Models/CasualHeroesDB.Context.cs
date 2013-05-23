@@ -13,10 +13,10 @@ namespace CasualHeroes.Web.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class casualheroes_dbEntities1 : DbContext
+    public partial class CasualHeroesEntities : DbContext
     {
-        public casualheroes_dbEntities1()
-            : base("name=casualheroes_dbEntities1")
+        public CasualHeroesEntities()
+            : base("name=CasualHeroesEntities")
         {
         }
     

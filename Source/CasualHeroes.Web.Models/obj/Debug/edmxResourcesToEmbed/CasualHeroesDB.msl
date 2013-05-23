@@ -1,22 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="casualheroes_dbModelStoreContainer" CdmEntityContainer="casualheroes_dbEntities1">
+  <EntityContainerMapping StorageEntityContainer="casualheroes_dbModelStoreContainer" CdmEntityContainer="CasualHeroesEntities">
     <EntitySetMapping Name="AcceptedRequests">
-      <EntityTypeMapping TypeName="casualheroes_dbModel.AcceptedRequest">
+      <EntityTypeMapping TypeName="CasualHeroesModel.AcceptedRequest">
         <MappingFragment StoreEntitySet="AcceptedRequests">
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Ratings">
-      <EntityTypeMapping TypeName="casualheroes_dbModel.Rating">
+      <EntityTypeMapping TypeName="CasualHeroesModel.Rating">
         <MappingFragment StoreEntitySet="Ratings">
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Requests">
-      <EntityTypeMapping TypeName="casualheroes_dbModel.Request">
+      <EntityTypeMapping TypeName="CasualHeroesModel.Request">
         <MappingFragment StoreEntitySet="Requests">
           <ScalarProperty Name="RequestId" ColumnName="id" />
           <ScalarProperty Name="UserId" ColumnName="userId" />
@@ -34,21 +34,21 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="RequestTags">
-      <EntityTypeMapping TypeName="casualheroes_dbModel.RequestTag">
+      <EntityTypeMapping TypeName="CasualHeroesModel.RequestTag">
         <MappingFragment StoreEntitySet="RequestTags">
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Tags">
-      <EntityTypeMapping TypeName="casualheroes_dbModel.Tag">
+      <EntityTypeMapping TypeName="CasualHeroesModel.Tag">
         <MappingFragment StoreEntitySet="Tags">
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Users">
-      <EntityTypeMapping TypeName="casualheroes_dbModel.User">
+      <EntityTypeMapping TypeName="CasualHeroesModel.User">
         <MappingFragment StoreEntitySet="Users">
           <ScalarProperty Name="UserId" ColumnName="id" />
           <ScalarProperty Name="Identifier" ColumnName="identifier" />
@@ -60,7 +60,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="UserTags">
-      <EntityTypeMapping TypeName="casualheroes_dbModel.UserTag">
+      <EntityTypeMapping TypeName="CasualHeroesModel.UserTag">
         <MappingFragment StoreEntitySet="UserTags">
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>

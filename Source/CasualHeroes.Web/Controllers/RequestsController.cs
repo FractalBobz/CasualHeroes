@@ -15,58 +15,15 @@ namespace CasualHeroes.Web.Controllers
 
 		public ActionResult Index(double latitude, double longitude)
 		{
-			var random = new Random();
-			var resultCount = random.Next(10);
-			var results = new List<Request>();
-			for (var i = 0; i < resultCount; ++i)
-			{
-				results.Add(new Request
-				{
-					Latitude = latitude + random.Next(60) - 30,
-					Longitude = longitude + random.Next(60) - 30,
-					Address = "Add",
-					StartDate = DateTime.Now,
-					EndDate = DateTime.Now.AddDays(1),
-					User = new User
-					{
-						FirstName = "John",
-						LastName = "Smith",
-						Email = "jsmith@casual-heroes.org",
-						PhoneNumber = "987-654-3210"
-					},
-					Title = "Title",
-					Description = "Description",
-					Tags = "Awesomeness, Wizardry, Aloof Demeanor" //new List<string> { "Awesomeness", "Wizardry", "Aloof Demeanor" }
-				});
-			}
-			return View(results);
+			return View(ViewModels.Request.Convert(new CasualHeroesEntities().Requests));
         }
 
         //
         // GET: /Requests/Details/5
 
-        public ActionResult Details(int id)
-		{
-			var random = new Random();
-			var request = new Request
-			{
-				Latitude = random.Next(60) - 30,
-				Longitude = random.Next(60) - 30,
-				Address = "Address",
-				StartDate = DateTime.Now,
-				EndDate = DateTime.Now.AddDays(1),
-				User = new User
-				{
-					FirstName = "John",
-					LastName = "Smith",
-					Email = "jsmith@casual-heroes.org",
-					PhoneNumber = "987-654-3210"
-				},
-				Title = "Title",
-				Description = "Description",
-				Tags = "Awesomeness, Wizardry, Aloof Demeanor" //new List<string> { "Awesomeness", "Wizardry", "Aloof Demeanor" }
-			};
-			return View(request);
+        public ActionResult Details(long id)
+        {
+	        return View(new ViewModels.Request(new CasualHeroesEntities().Requests.Single(r => r.RequestId == id)));
         }
 
         //
