@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace CasualHeroes.Models
+namespace CasualHeroes.Web.Models
 {
-	public class Location
+	public class User
 	{
-		public int LocationID { get; set; }
+		public string GivenName { get; set; }
+		public string FamilyName { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
 		public decimal Latitude { get; set; }
 		public decimal Longitude { get; set; }
 		public string AddressLine1 { get; set; }
