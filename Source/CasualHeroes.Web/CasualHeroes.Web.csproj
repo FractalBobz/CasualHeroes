@@ -122,6 +122,14 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Content\css\jss.css" />
+    <Content Include="Content\img\CH.png" />
+    <Content Include="Content\js\boot.js" />
+    <Content Include="Content\js\casualheroes.js" />
+    <Content Include="Content\js\core.js" />
+    <Content Include="Content\js\hash.js" />
+    <Content Include="Content\js\starfield.js" />
+    <Content Include="Content\js\touch.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
