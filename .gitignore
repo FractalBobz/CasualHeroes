@@ -1,9 +1,8 @@
-Source/CasualHeroes/bin/CasualHeroes.dll
-Source/CasualHeroes/bin/CasualHeroes.pdb
-Source/CasualHeroes/obj/
-Source/CasualHeroes.Tests/bin/
-Source/CasualHeroes.Tests/obj/
-Source/CasualHeroes.v11.suo
+Source/CasualHeroes.Web/bin/CasualHeroes.dll
+Source/CasualHeroes.Web/bin/CasualHeroes.pdb
+Source/CasualHeroes.Web/obj/
+Source/CasualHeroes/
+Source/CasualHeroes.Web.v11.suo
 
 .swp
 *~
