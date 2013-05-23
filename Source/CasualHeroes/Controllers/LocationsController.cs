@@ -16,16 +16,17 @@ namespace CasualHeroes.Controllers
 		{
 			var random = new Random();
 			var resultCount = random.Next(10);
-			var results = new List<int>();
+			var results = new List<Location>();
 			for (var i = 0; i < resultCount; ++i)
 			{
-				results.Add(random.Next(5000));
+				results.Add(new Location 
+				{
+					LocationID = random.Next(5000),
+					Latitude = latitude + random.Next(60) - 30,
+					Longitude = longitude + random.Next(60) - 30,
+				});
 			}
-			var model = new LocationsIndexViewModel
-			{
-				Results = results
-			};
-			return View(model);
+			return View(results);
 		}
 	}
 }

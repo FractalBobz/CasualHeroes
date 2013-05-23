@@ -1,6 +1,6 @@
-﻿@model CasualHeroes.Models.LocationsIndexViewModel
+﻿@model IEnumerable<CasualHeroes.Models.Location>
 @{
     Layout = null;
 }
 
-@Json.Encode(Model.Results)
+@Json.Encode(Model)
