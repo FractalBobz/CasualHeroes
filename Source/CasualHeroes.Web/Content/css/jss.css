@@ -1,0 +1,62 @@
+
+body{margin:0;padding:0;font-family:Baskerville, Verdana, Arial, sans-serif;
+	color:#ffe;background-color:#001;
+}
+table{margin:0 auto;padding:0;border:0}ol,ul,.ml2{padding:0;margin:0;display:block;text-align:left}
+br,.cb{clear:both}img{border:0}
+nav,footer{display:block}
+footer{position:absolute;bottom:0;padding:.2em 0;background-color:rgba(0,0,0,.5)}
+
+.pab{position:absolute}.prl{position:relative}.pfx{position:fixed}.zero{left:0;top:0;}.zbot{left:0;bottom:0;}
+.wide{width:100%}.phi0{width:38%;}.phi1{width:62%;}.half{width:50%}.third{width:33.3%}.h1em{height:1em}
+.fl{float:left;}.fr{float:right;}.m0a{margin:0 auto}.m0{margin:0}
+.vv{visibility:visible}.vh{visibility:hidden}
+.dn{display:none}.db{display:block}.dib{display:inline-block}
+.vat{vertical-align:top}.vam{vertical-align:middle}.vab{vertical-align:bottom}
+.tac{text-align:center}.tal{text-align:left}.tar{text-align:right}
+.oh{overflow:hidden}.ov{overflow:visible}.oa{overflow:auto}
+.nw{white-space:nowrap}.arrow{cursor:default}.hand{cursor:pointer}
+.z1{z-index:1}.z2{z-index:2}.z3{z-index:3}
+input,textarea,.bsb{box-sizing: border-box;}
+
+a,.anamur{
+	transition:color .6s ease 0s, opacity .6s ease 0s, background-color .6s ease 0s,
+	width .6s ease 0s, height .6s ease 0s, left .6s ease 0s, top .6s ease 0s,
+	box-shadow .6s ease 0s, text-shadow .6s ease 0s, background-image .6s ease 0s;
+}
+
+@media print{
+	.noprint{display:none;}
+}
+
+body{
+	-webkit-tap-highlight-color:rgba(0,0,0,0); -webkit-touch-callout:none;
+	-webkit-overflow-scrolling:touch; -webkit-text-size-adjust:none; -webkit-user-select:none;
+	-webkit-background-clip: padding-box;
+}
+button::-moz-focus-inner{border:0}
+
+
+canvas, img {
+	image-rendering: optimizeSpeed;
+	image-rendering: -moz-crisp-edges;
+	image-rendering: -webkit-optimize-contrast;
+	image-rendering: optimize-contrast;	-ms-interpolation-mode: nearest-neighbor;
+} 
+
+button,.butlink{
+	font-weight:bold;cursor:default;
+	border-radius:1em; border-width:.3em; line-height:2em;
+	text-align:center; color:#333; vertical-align:middle; margin:0 .2em .1em 0;
+	background-color:#adf; min-width:2em; min-height:1em;
+	padding:.2em .3em; text-decoration:none;
+	box-shadow: inset .2em .2em .4em #fff, inset -.1em -.1em .3em rgba(0,0,0,.3);
+}
+button[disabled],button[disabled]:hover,button[disabled]:active {
+	background-color:#ddd; color:#666;
+}
+button:hover,.butlink:hover{background-color:#def; text-decoration:none;}
+button:active,button.chosen,.butlink:active,.butlink._down_{
+	background-color:#fff; box-shadow: inset .1em .1em .3em rgba(0,0,0,.3);
+}
+button:focus,input:focus,.butlink:focus{border-color:#fff;}

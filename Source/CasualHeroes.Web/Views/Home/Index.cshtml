@@ -1,5 +1,65 @@
-﻿@{
-    ViewBag.Title = "Casual Heroes";
-}
+<!DOCTYPE html>
+<html lang="en-gb" dir="ltr">
+<head>
+<meta charset="utf-8">
+<title>Casual Heroes</title>
+<meta name="description" content="Casual Heroes">
+<meta name="keywords" content="Casual Heroes">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1, user-scalable=no, target-densitydpi=device-dpi">
+<style>
+body{margin:0;padding:0;font-family:Arial,sans-serif}.jshide{display:none}
+</style>
+<link href="Content/css/jss.css" rel="stylesheet" media="all">
+<noscript><style>.jshide{display:block}.dn,.nshide{display:none}</style></noscript>
+<link rel="shortcut icon" href="Content/favi.gif"></head>
+<body>
+<script>
+	var Win=window,M=Math,WD=Win.document;
+	Win.jss={
+		boot:{start:new Date()-0},nav:{IE:0},
+		resize:function(){
+		var w=Win.innerWidth||WD.documentElement.clientWidth,
+			h=Win.innerHeight||WD.documentElement.clientHeight;
+		if(!Win.fontsized)Win.fontsized=1,
+			WD.body.style.fontSize=.1*M.round(67*M.log(.013*M.sqrt(w*w+h*h)))+'px'
+		}
+	};
+	Win.onresize=jss.resize;jss.resize()
+</script>
 
-<h2>Casual Heroes</h2>
+<a id="content" href="#content"></a>
+
+<div id="c_About" class="dn">
+Casual Heroes connects people who need a hand with people willing to help.
+</div>
+<div id="field" class="tac">
+<article>
+	<section class="m0a db">
+		<p class="tac" style="padding:0 2em"><img class="wide" style="max-height:12em" src="Content/img/CH.png" alt="Casual Heroes"></p>
+		<div class="half dib fl bsb">
+			<header class="butlink p10 db anamur arrow" data-klik="jss.hash.go2('Help');">
+				I can help!
+			</header></div>
+		<div class="half db fl bsb">
+			<header class="butlink p10 db anamur arrow" data-klik="jss.hash.go2('Need');">I need help!</header>
+			</div>
+		<br>
+		<div class="half db m0a bsb">
+			<header class="butlink p10 db anamur arrow" data-klik="jss.hash.go2('Local');">What's near me?</header>
+		</div>
+		<br>
+		<br>
+		<div class="half db m0a bsb">
+			<header class="butlink p10 db anamur arrow" data-klik="jss.hash.go2('About');">About</header>
+		</div>
+		<br>
+	</section>
+</article>
+</div>
+<footer class="wide tac small">Built at the DMGT Hackathon.</footer>
+<script>
+var scripts=['boot','core','hash','touch','starfield','casualheroes'];
+for(var i=0;i<scripts.length;i++)
+	WD.write('<script src="Content/js/'+scripts[i]+'.js"><\/script>');
+</script>
+</body></html>
