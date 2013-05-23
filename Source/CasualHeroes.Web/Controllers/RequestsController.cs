@@ -15,7 +15,11 @@ namespace CasualHeroes.Web.Controllers
 
 		public ActionResult Index(double latitude, double longitude)
 		{
-			return View(ViewModels.Request.Convert(new CasualHeroesEntities().Requests));
+			return View(ViewModels.Request.Convert(new CasualHeroesEntities().Requests
+				.Where(r => r.Latitude != null && r.Longitude != null)
+				.OrderBy(r => Math.Pow((r.Latitude.Value - latitude) * (r.Latitude.Value - latitude) + (r.Longitude.Value - longitude) * (r.Longitude.Value - longitude), 0.5))
+				.Take(10)
+			));
         }
 
         //
