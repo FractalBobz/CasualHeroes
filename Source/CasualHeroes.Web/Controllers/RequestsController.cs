@@ -21,18 +21,18 @@ namespace CasualHeroes.Web.Controllers
 			{
 				results.Add(new Request
 				{
-					Location = new Location
-					{
-						LocationID = random.Next(5000),
-						Latitude = latitude + random.Next(60) - 30,
-						Longitude = longitude + random.Next(60) - 30,
-						AddressLine1 = "45 Street St",
-						AddressLine2 = "City, Province, Country"
-					},
+					Latitude = latitude + random.Next(60) - 30,
+					Longitude = longitude + random.Next(60) - 30,
+					AddressLine1 = "45 Street St",
+					AddressLine2 = "City, Province, Country",
 					StartTime = DateTime.Now,
 					EndTime = DateTime.Now.AddDays(1),
 					Owner = new User
 					{
+						Latitude = latitude + random.Next(60) - 30,
+						Longitude = longitude + random.Next(60) - 30,
+						AddressLine1 = "45 Street St",
+						AddressLine2 = "City, Province, Country",
 						GivenName = "John",
 						FamilyName = "Smith",
 						Email = "jsmith@casual-heroes.org",
@@ -54,18 +54,18 @@ namespace CasualHeroes.Web.Controllers
 			var random = new Random();
 			var request = new Request
 			{
-				Location = new Location
-				{
-					LocationID = random.Next(5000),
-					Latitude = random.Next(60) - 30,
-					Longitude = random.Next(60) - 30,
-					AddressLine1 = "45 Street St",
-					AddressLine2 = "City, Province, Country"
-				},
+				Latitude = random.Next(60) - 30,
+				Longitude = random.Next(60) - 30,
+				AddressLine1 = "45 Street St",
+				AddressLine2 = "City, Province, Country",
 				StartTime = DateTime.Now,
 				EndTime = DateTime.Now.AddDays(1),
 				Owner = new User
 				{
+					Latitude = random.Next(60) - 30,
+					Longitude = random.Next(60) - 30,
+					AddressLine1 = "45 Street St",
+					AddressLine2 = "City, Province, Country",
 					GivenName = "John",
 					FamilyName = "Smith",
 					Email = "jsmith@casual-heroes.org",
