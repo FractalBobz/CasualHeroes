@@ -1,0 +1,132 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div>
+        <h2>Data Retrieval</h2>
+        
+        <div>
+            <fieldset>
+                <legend>Latest 10 Requests</legend>
+                <div id="latest10Requests"></div>
+            </fieldset>
+        </div>
+        <h2>Data Capture</h2>
+
+        <div>
+            <fieldset>
+                <legend>Create new User</legend>
+                <div><label for="identifier">Identifier:</label><input id="identifier" type="text" value="{07F9951D-9CB6-484D-B703-5527FB4B6F96}"/></div>
+                <div><label for="emailAddress">Email:</label><input id="emailAddress" type="text" value="joel.hammond-turner@landmark.co.uk"/></div>
+                <div><label for="firstName">Firstname:</label><input id="firstName" type="text" value="Joel"/></div>
+                <div><label for="lastName">Lastname:</label><input id="lastName" type="text" value="Hammond-Turner"/></div>
+                <div><label for="phoneNumber">Phone:</label><input id="phoneNumber" type="text" value="07778 367326"/></div>
+                <button id="createFirstUser">Create First User</button>
+            </fieldset>
+    
+            <fieldset>
+                <legend>Create new Request</legend>    
+                <div><label for="requestorEmailAddress">Email:</label><input id="requestorEmailAddress" type="text" value="joel.hammond-turner@landmark.co.uk"/></div>
+                <div><label for="requestTitle">Title:</label><input id="requestTitle" type="text" value="Help needed"/></div>
+                <div><label for="requestDescription">Description:</label><input id="requestDescription" type="text" value="Help needed to code something cool."/></div>
+                <div><label for="requestAddress">Address:</label><input id="requestAddress" type="text" value="4-5 Bonhill Street, London"/></div>
+                <div><label for="requestLatLong">Lat/Long:</label><input id="requestLatLong" type="text" value="123.45:123.45"/></div>
+                <div><label for="requestStartDate">Start Date:</label><input id="requestStartDate" type="text" value=""/></div>
+                <div><label for="requestDuration">Duration (hrs):</label><input id="requestDuration" type="text" value="1"/></div>
+                <div><label for="requestTags">Tags:</label><input id="requestTags" type="text" value=""/></div>
+                <button id="createRequest">Create Request</button>
+            </fieldset>
+        </div>
+
+    </div>
+
+    <script src="https://casualheroes.azure-mobile.net/client/MobileServices.Web-1.0.0.min.js"></script>
+    <script src="~/Scripts/jquery-1.4.4.js"></script>
+
+    <script type="text/javascript">
+
+        $(function () {
+            
+            $.mobileClient = new WindowsAzure.MobileServiceClient("https://casualheroes.azure-mobile.net/",
+                                                                  "LjjlwWXmUrgfNWDYduASKkZDtIOTGq99");
+            $.userTable = $.mobileClient.getTable("Users");
+            $.requestTable = $.mobileClient.getTable("Requests");
+
+            $.requestTable.orderByDescending("createdOn").take(10).read().done(function(requests) {
+                var ul = $("<ul />");
+                for (var i = 0; i < requests.length; i++) {
+                    var request = requests[i];
+                    ul.append("<li>" + request.title + " (" + request.startDate + "-" + request.endDate + ")</li>");
+                }
+                $("#latest10Requests").html(ul);
+            });
+            
+            var nextDate = new Date();
+            $("#requestStartDate").val(nextDate);
+            
+            $("#createFirstUser").click(function() {
+                var usersEmail = $("#emailAddress").val();
+                $.userTable.where({ email: usersEmail }).read().done(function(results) {
+                    if (results.length > 0) {
+                        alert("User " + usersEmail + " already exists!");
+                    } else {
+                        var user = {
+                            identifier: $("#identifier").val(),
+                            email: usersEmail,
+                            firstName: $("#firstName").val(),
+                            lastName: $("#lastName").val(),
+                            phoneNumber: $("#phoneNumber").val()
+                        };
+
+                        $.userTable.insert(user).done(function () { alert("Created user!"); });
+                    }
+                });
+            });
+            
+            $("#createRequest").click(function() {
+
+                var usersEmail = $("#requestorEmailAddress").val();
+                
+                $.userTable.where({ email: usersEmail }).read().done(function (results) {
+                    if (results.length == 1) {
+
+                        var user = results[0];
+                        
+                        // set up now -> now + 1h
+                        var startDate = new Date(Date.parse($("#requestStartDate").val()));
+                        var endDate = startDate;
+                        endDate.setHours(startDate.getHours() + parseInt($("#requestDuration").val()));
+
+                        var now = new Date();
+                        var request = {
+                            userId: user.id,
+                            title: $("#requestTitle").val(),
+                            description: $("#requestDescription").val(),
+                            address: $("#requestAddress").val(),
+                            latLong: $("#requestLatLong").val(),
+                            tags: $("#requestTags").val(),
+                            startDate: startDate,
+                            endDate: endDate
+                        };
+                        
+                        $.requestTable.insert(request).done(function () {
+                            alert("inserted request");
+                        });
+                    } else {
+                        alert("User " + usersEmail + "not found or more than one user!");
+                    }
+                });
+            });
+        });
+
+    </script>
+</body>
+</html>
