@@ -23,7 +23,7 @@ namespace CasualHeroes.Web.Controllers
 
         public ActionResult Details(long id)
         {
-	        return View(new ViewModels.Request(new CasualHeroesEntities().Requests.Single(r => r.RequestId == id)));
+	        return View(ViewModels.Request.Convert(new CasualHeroesEntities().Requests.Single(r => r.RequestId == id)));
         }
 
         //
@@ -42,13 +42,28 @@ namespace CasualHeroes.Web.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
+	            var request = new Request
+	            {
+					Title = collection["Title"],
+					Description = collection["Description"],
+					Address = collection["Address"],
+					Tags = collection["Tags"],
+					Latitude = double.Parse(collection["Latitude"]),
+					Longitude = double.Parse(collection["Longitude"]),
+					StartDate = DateTimeOffset.Parse(collection["StartDate"]),
+					EndDate = DateTimeOffset.Parse(collection["EndDate"]),
+					CreatedBy = collection["CreatedBy"]
+	            };
 
-                return RedirectToAction("Index");
+	            var context = new CasualHeroesEntities();
+	            context.Requests.Add(request);
+	            context.SaveChanges();
+
+                return RedirectToAction("Details", new { id = request.RequestId } );
             }
             catch
             {
-                return View();
+				return View();
             }
         }
 

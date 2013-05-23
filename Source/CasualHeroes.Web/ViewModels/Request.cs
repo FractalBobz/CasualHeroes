@@ -32,7 +32,7 @@ namespace CasualHeroes.Web.ViewModels
 		}
 
 		public RequestUser User { get; set; }
-		public int RequestId { get; set; }
+		public long RequestId { get; set; }
 		public string Title { get; set; }
 		public string Description { get; set; }
 		public string Address { get; set; }
@@ -43,29 +43,29 @@ namespace CasualHeroes.Web.ViewModels
 		public DateTimeOffset? EndDate { get; set; }
 		public DateTimeOffset? CreatedOn { get; set; }
 		public string CreatedBy { get; set; }
-
-		public Request()
+		
+		public static Request Convert(Models.Request request)
 		{
-		}
-
-		public Request(Models.Request request)
-		{
-			User = new RequestUser(request.User);
-			Title = request.Title;
-			Description = request.Description;
-			Address = request.Address;
-			Tags = request.Tags;
-			Latitude = request.Latitude;
-			Longitude = request.Longitude;
-			StartDate = request.StartDate;
-			EndDate = request.EndDate;
-			CreatedOn = request.CreatedOn;
-			CreatedBy = request.CreatedBy;
+			return new Request
+			{
+				User = request.User == null ? null : new RequestUser(request.User),
+				RequestId = request.RequestId,
+				Title = request.Title,
+				Description = request.Description,
+				Address = request.Address,
+				Tags = request.Tags,
+				Latitude = request.Latitude,
+				Longitude = request.Longitude,
+				StartDate = request.StartDate,
+				EndDate = request.EndDate,
+				CreatedOn = request.CreatedOn,
+				CreatedBy = request.CreatedBy
+			};
 		}
 
 		public static IEnumerable<Request> Convert(IEnumerable<Models.Request> requests)
 		{
-			return requests.ToList().Select(r => new Request(r));
+			return requests.ToList().Select(Convert);
 		}
 	}
 }
