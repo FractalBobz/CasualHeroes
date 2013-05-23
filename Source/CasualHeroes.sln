@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CasualHeroes", "CasualHeroes\CasualHeroes.csproj", "{F9872903-E34A-4A43-8C18-6C4BA3F5D913}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CasualHeroes.Tests", "CasualHeroes.Tests\CasualHeroes.Tests.csproj", "{15E3DF8E-5815-45AF-BCDE-D6B83B5A046C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F9872903-E34A-4A43-8C18-6C4BA3F5D913}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9872903-E34A-4A43-8C18-6C4BA3F5D913}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9872903-E34A-4A43-8C18-6C4BA3F5D913}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9872903-E34A-4A43-8C18-6C4BA3F5D913}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15E3DF8E-5815-45AF-BCDE-D6B83B5A046C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15E3DF8E-5815-45AF-BCDE-D6B83B5A046C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15E3DF8E-5815-45AF-BCDE-D6B83B5A046C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15E3DF8E-5815-45AF-BCDE-D6B83B5A046C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
