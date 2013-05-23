@@ -3,22 +3,18 @@ xtend('jss.hash',{
 	canpush:0&&Win.history&&Win.history.pushState,
 	trig:false,start:false,place:'',disable:false,title:WD.title,deal:{},
 	getloc:Fun("WDL.href.S('#!')[1]||WDL.pathname.substr(1)||'Home'",1),
-	// if(!h){var ls=WDL.search,sl=ls.S('hash=')[1];if(sl)h=sl.S('&')[0]}
 	hashish:function(a,b){
 		var jh=jss.hash,ph=jh.place,ispop=false,loc=jh.getloc();jh.start=true;
 		if(tof(a,'o'))a=loc,ispop=true;
 		if(jh.disable&&a)loc=a;
 		var s=loc.S('/'),ent=s[0];
-		erk('HASHPUSHER '+a+' / '+loc+': '+(jh.deal[ent]?'deal':jh.menu.happsh[ent]?'haps':'gogo'));
 		jh.place=loc;
-		if(ph==loc&&!b)1; // freeze time unless just loaded code
+		if(ph==loc&&!b)1; 
 		else if(jh.deal[ent])jh.deal[ent](s); // we know what to do with this
 		else if(jh.menu.happsh[ent]){ // we know what to load for this
 			jss.require((Win.atob?'':'c/Tools/atob	')
 				+jh.menu.happsh[ent]+(b?'':"	jss.hash.hashish('',true);"));
 		}else{ // its a normal page
-			// Win.history.replaceState('','',s);
-			erk('heading from '+ph+' to '+s);
 			if(ph&&ph!=s.J('/'))WDL.replace(WDL.protocol+'//'+WDL.host+'/'+s.J('/'));
 		}
 		WD.title=ent+': '+jh.title;jh.trig=false;
@@ -33,7 +29,6 @@ jss.hash.go2=function(a,b){ // WDL.hash unescapes "&" which is bad
 	if(jh.disable)d=jh.place;a=a||f;
 	var c=a.ux().S('/'),e=c[0]||f;
 	if(b&&d==a){
-		// erk(a+' Bsame '+e)
 		if(jh.deal[e])jh.deal[e](c)
 	}else{
 		jh.trig=b;
