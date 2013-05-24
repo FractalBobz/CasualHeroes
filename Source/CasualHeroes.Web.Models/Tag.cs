@@ -14,6 +14,16 @@ namespace CasualHeroes.Web.Models
     
     public partial class Tag
     {
-        public long id { get; set; }
+        public Tag()
+        {
+            this.RequestTags = new HashSet<RequestTag>();
+            this.UserTags = new HashSet<UserTag>();
+        }
+    
+        public long TagId { get; set; }
+        public string Name { get; set; }
+    
+        public virtual ICollection<RequestTag> RequestTags { get; set; }
+        public virtual ICollection<UserTag> UserTags { get; set; }
     }
 }

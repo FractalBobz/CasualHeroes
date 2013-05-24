@@ -14,6 +14,6 @@ namespace CasualHeroes.Web.Models
     
     public partial class AcceptedRequest
     {
-        public long id { get; set; }
+        public long AcceptedRequestId { get; set; }
     }
 }

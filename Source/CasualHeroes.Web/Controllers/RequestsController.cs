@@ -60,7 +60,7 @@ namespace CasualHeroes.Web.Controllers
 			{
 				db.Requests.Add(request);
 				db.SaveChanges();
-				return Json(new Response { Data = "Added" });
+				return Json(new Response { Data = new { request.RequestId } });
 			}
 
 			return Json(new Response { Data = "Failed" });

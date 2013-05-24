@@ -14,6 +14,11 @@ namespace CasualHeroes.Web.Models
     
     public partial class Request
     {
+        public Request()
+        {
+            this.RequestTags = new HashSet<RequestTag>();
+        }
+    
         public long RequestId { get; set; }
         public long UserId { get; set; }
         public string Title { get; set; }
@@ -28,5 +33,6 @@ namespace CasualHeroes.Web.Models
         public Nullable<System.DateTimeOffset> CreatedOn { get; set; }
     
         public virtual User User { get; set; }
+        public virtual ICollection<RequestTag> RequestTags { get; set; }
     }
 }

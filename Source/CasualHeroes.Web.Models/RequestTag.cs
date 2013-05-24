@@ -14,6 +14,11 @@ namespace CasualHeroes.Web.Models
     
     public partial class RequestTag
     {
-        public long id { get; set; }
+        public long RequestTagId { get; set; }
+        public long RequestId { get; set; }
+        public long TagId { get; set; }
+    
+        public virtual Request Request { get; set; }
+        public virtual Tag Tag { get; set; }
     }
 }

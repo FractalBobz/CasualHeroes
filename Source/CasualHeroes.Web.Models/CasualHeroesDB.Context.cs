@@ -26,7 +26,6 @@ namespace CasualHeroes.Web.Models
         }
     
         public DbSet<AcceptedRequest> AcceptedRequests { get; set; }
-        public DbSet<Rating> Ratings { get; set; }
         public DbSet<Request> Requests { get; set; }
         public DbSet<RequestTag> RequestTags { get; set; }
         public DbSet<Tag> Tags { get; set; }
