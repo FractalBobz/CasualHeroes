@@ -90,27 +90,29 @@ Win.hero={
 	},
 	lookAtMap:function() {
 		ihtml("field",'<canvas class="wide" style="height:13em" id="map_canvas"></canvas>');
-		var marker=[],
-			mapOptions = {
-				center: new google.maps.LatLng(hero.lat, hero.lon),
-				zoom: 8,
-				mapTypeId: google.maps.MapTypeId.HYBRID 
-			};
-		var map = new google.maps.Map(dge("map_canvas"),mapOptions);
+		sT(function(){
+			var marker=[],
+				mapOptions = {
+					center: new google.maps.LatLng(hero.lat, hero.lon),
+					zoom: 8,
+					mapTypeId: google.maps.MapTypeId.HYBRID 
+				};
+			var map = new google.maps.Map(dge("map_canvas"),mapOptions);
 
-		$.requestTable.orderByDescending("createdOn").take(10).read().done(function(requests) {
-			var people='';
-			for(var i=0; i<requests.length; i++) {
-				var r = requests[i],sd=r.startDate;
-				people+=r.title+" ("+sd.getHours()+":"+pad(sd.getMinutes(),2,0)+')<br>';
-				marker[marker.length] = new google.maps.Marker({
-					 animation: google.maps.Animation.DROP,
-					 title: r.title,
-					 position: new google.maps.LatLng(r.latitude,r.longitude),
-					 map:map
-				});
-			}
-		});
+			$.requestTable.orderByDescending("createdOn").take(10).read().done(function(requests) {
+				var people='';
+				for(var i=0; i<requests.length; i++) {
+					var r = requests[i],sd=r.startDate;
+					people+=r.title+" ("+sd.getHours()+":"+pad(sd.getMinutes(),2,0)+')<br>';
+					marker[marker.length] = new google.maps.Marker({
+						 animation: google.maps.Animation.DROP,
+						 title: r.title,
+						 position: new google.maps.LatLng(r.latitude,r.longitude),
+						 map:map
+					});
+				}
+			});
+		},777);
 	}
 };
 
