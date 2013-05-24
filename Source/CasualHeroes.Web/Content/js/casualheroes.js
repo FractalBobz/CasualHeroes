@@ -13,7 +13,8 @@ Win.hero={
 			else{
 				b='Okay '+hero.iam;
 				if(d[0]=='Help'){
-					c='ur@'+hero.lat+','+hero.lon+'<br>nobody wants your help'
+					var mytag=d[1];
+					c='ur@'+hero.lat+','+hero.lon+'<br>nobody wants your '+mytag+' help';
 				}else if(d[0]=='Need'){
 					c='ur@'+hero.lat+','+hero.lon+hero.c_NeedDetails;
 				}else if(d[0]=='Details')
@@ -77,6 +78,25 @@ Win.hero={
 				});
 			}
 		});
+	},
+	getTags:function(){
+		$.tagsTable.orderBy("tagName").read()
+			.done(function(tags) {
+				hero.skills=[];
+				for(var i=0;i<tags.length;i++)
+					hero.skills.push(tags[i].tagName);
+				jss.hash.hashish();
+			});
+	},
+	lookAtMap:function() {
+		$.requestTable.orderByDescending("createdOn").take(10).read().done(function(requests) {
+			var people='';
+			for(var i=0; i<requests.length; i++) {
+				var r = requests[i],sd=r.startDate;
+				people+=r.title+" ("+sd.getHours()+":"+pad(sd.getMinutes(),2,0)+')<br>'
+			}
+			ihtml("field",people);
+		});
 	}
 };
 
@@ -91,7 +111,7 @@ xtend('jss.hash.deal',{
 	Home:function(){ihtml('field',hero.home)},
 	Help:hero.hash,
 	Need:hero.hash,
-	Local:function(){lookAtMap()},
+	Local:function(){hero.lookAtMap()},
 	About:function(){ihtml('field',hero.c_About)}
 });
 
@@ -128,7 +148,7 @@ function getTags(){
 			jss.hash.hashish();
 		});
 }
-getTags();
+hero.getTags();
 
 function initialize() {
 var mapOptions = {

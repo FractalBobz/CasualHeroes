@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="74724416ed5348358c899e99ef1c9334" Name="Diagram1">
-        <EntityTypeShape EntityType="CasualHeroesModel.AcceptedRequest" Width="1.5" PointX="2.75" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CasualHeroesModel.AcceptedRequest" Width="1.5" PointX="2.75" PointY="6.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CasualHeroesModel.Request" Width="1.5" PointX="0.75" PointY="2.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CasualHeroesModel.RequestTag" Width="1.5" PointX="2.75" PointY="2.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CasualHeroesModel.Tag" Width="1.5" PointX="4.75" PointY="0.5" IsExpanded="true" />
@@ -16,6 +16,9 @@
         <AssociationConnector Association="CasualHeroesModel.TagRequestTag" />
         <AssociationConnector Association="CasualHeroesModel.UserTagUser" />
         <AssociationConnector Association="CasualHeroesModel.UserTagTag" />
+        <EntityTypeShape EntityType="CasualHeroesModel.Rating" Width="1.5" PointX="10.129663511239766" PointY="15.569806285002178" />
+        <AssociationConnector Association="CasualHeroesModel.AcceptedRequestRequest" />
+        <AssociationConnector Association="CasualHeroesModel.AcceptedRequestUser" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

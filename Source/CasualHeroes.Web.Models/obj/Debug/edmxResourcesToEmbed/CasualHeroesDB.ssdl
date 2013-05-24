@@ -2,6 +2,7 @@
 <Schema Namespace="casualheroes_dbModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="casualheroes_dbModelStoreContainer">
     <EntitySet Name="AcceptedRequests" EntityType="casualheroes_dbModel.Store.AcceptedRequests" store:Type="Tables" Schema="casualheroes" />
+    <EntitySet Name="Ratings" EntityType="casualheroes_dbModel.Store.Ratings" store:Type="Tables" Schema="casualheroes" />
     <EntitySet Name="Requests" EntityType="casualheroes_dbModel.Store.Requests" store:Type="Tables" Schema="casualheroes" />
     <EntitySet Name="RequestTags" EntityType="casualheroes_dbModel.Store.RequestTags" store:Type="Tables" Schema="casualheroes" />
     <EntitySet Name="Tags" EntityType="casualheroes_dbModel.Store.Tags" store:Type="Tables" Schema="casualheroes" />
@@ -9,6 +10,14 @@
     <EntitySet Name="UserTags" EntityType="casualheroes_dbModel.Store.UserTags" store:Type="Tables" Schema="casualheroes" />
   </EntityContainer>
   <EntityType Name="AcceptedRequests">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="requestId" Type="bigint" />
+    <Property Name="userId" Type="bigint" />
+  </EntityType>
+  <EntityType Name="Ratings">
     <Key>
       <PropertyRef Name="id" />
     </Key>

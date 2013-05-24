@@ -4,6 +4,8 @@
     <EntitySetMapping Name="AcceptedRequests">
       <EntityTypeMapping TypeName="CasualHeroesModel.AcceptedRequest">
         <MappingFragment StoreEntitySet="AcceptedRequests">
+          <ScalarProperty Name="UserId" ColumnName="userId" />
+          <ScalarProperty Name="RequestId" ColumnName="requestId" />
           <ScalarProperty Name="AcceptedRequestId" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -46,9 +48,9 @@
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="CasualHeroesModel.User">
         <MappingFragment StoreEntitySet="Users">
-          <ScalarProperty Name="createdOn" ColumnName="createdOn" />
-          <ScalarProperty Name="createdBy" ColumnName="createdBy" />
-          <ScalarProperty Name="tags" ColumnName="tags" />
+          <ScalarProperty Name="CreatedOn" ColumnName="createdOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="createdBy" />
+          <ScalarProperty Name="Tags" ColumnName="tags" />
           <ScalarProperty Name="UserId" ColumnName="id" />
           <ScalarProperty Name="Identifier" ColumnName="identifier" />
           <ScalarProperty Name="Email" ColumnName="email" />
@@ -64,6 +66,13 @@
           <ScalarProperty Name="TagId" ColumnName="tagId" />
           <ScalarProperty Name="UserId" ColumnName="userId" />
           <ScalarProperty Name="UserTagId" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ratings">
+      <EntityTypeMapping TypeName="CasualHeroesModel.Rating">
+        <MappingFragment StoreEntitySet="Ratings">
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

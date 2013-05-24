@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CasualHeroes.Web.Helpers;
 using CasualHeroes.Web.Models;
 
 namespace CasualHeroes.Web.Controllers
@@ -50,6 +51,9 @@ namespace CasualHeroes.Web.Controllers
 		[HttpPost]
 		public ActionResult Create(User user)
 		{
+			user.CreatedOn = DateTime.UtcNow;
+			var tags = TagsSplitter.Split(db, user.Tags);
+			user.UserTags = tags.Select(t => new UserTag { User = user, Tag = t }).ToList();
 			if (ModelState.IsValid)
 			{
 				db.Users.Add(user);
@@ -80,6 +84,18 @@ namespace CasualHeroes.Web.Controllers
 		public ActionResult Edit(long id, User user)
 		{
 			user.UserId = id;
+			var tags = TagsSplitter.Split(db, user.Tags);
+			var existingTags = db.UserTags.Where(ut => ut.UserId == user.UserId).ToList();
+			var existingTagNames = existingTags.Select(ut => ut.Tag.Name).ToList();
+			foreach (var tag in tags.Where(t => !existingTagNames.Contains(t.Name)))
+			{
+				db.UserTags.Add(new UserTag { User = user, Tag = tag });
+			}
+			foreach (var userTag in existingTags.Where(ut => !tags.Select(t => t.Name).Contains(ut.Tag.Name)))
+			{
+				db.UserTags.Remove(userTag);
+			}
+
 			if (ModelState.IsValid)
 			{
 				db.Entry(user).State = EntityState.Modified;
