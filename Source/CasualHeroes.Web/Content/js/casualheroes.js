@@ -9,7 +9,7 @@ Win.hero={
 			if(b=='Help')b='I can help with:';
 			if(b=='Need')b='I need:';
 		}else if(!d[2]){ // stage 2: more details
-			if(!hero.iam)b='Please Log In',c='using Facebook or Twitter';
+			if(!hero.iam)return ihtml('field',hero.c_CreateAccount);
 			else{
 				b='Okay '+hero.iam;
 				if(d[0]=='Help'){
@@ -84,8 +84,8 @@ Win.hero={
 					email: email, phoneNumber: fval('phone')
 				};
 				$.userTable.insert(user).done(function () {
-					hero.iam=fval('name');
-					hero.email=email;
+					hero.iam=fval('name',name);
+					hero.email=fval('email',email);
 					ihtml('field',"Created user! Go back and try again."); 
 				});
 			}
