@@ -102,8 +102,8 @@ Win.hero={
 
 	lookAtMap:function() {
 		ihtml("field",'<div class="wide" style="height:'+(jss.y1-12)+'px" id="map_canvas"></div>');	
+		var infos=[];
 		var marker=[],
-		var infos=[], //Naughty I know
 			mapOptions = {
 				center: new google.maps.LatLng(hero.lat, hero.lon),
 				zoom: 8,
