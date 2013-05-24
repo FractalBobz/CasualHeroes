@@ -17,21 +17,32 @@ namespace CasualHeroes.Web.Controllers
         //
         // GET: /AcceptedRequest/
 
-        public ActionResult Index()
+        public ActionResult Index(bool html = false)
         {
-			var response = new Response { Data = ViewModels.AcceptedRequest.Convert(db.AcceptedRequests.Include(a => a.Request).Include(a => a.User)) };
+	        var acceptedRequests = db.AcceptedRequests.Include(a => a.Request).Include(a => a.User);
+
+			if (html)
+			{
+				return View(acceptedRequests);
+			}
+			var response = new Response { Data = ViewModels.AcceptedRequest.Convert(acceptedRequests) };
 			return Json(response, JsonRequestBehavior.AllowGet);
         }
 
         //
         // GET: /AcceptedRequest/Details/5
 
-        public ActionResult Details(long id = 0)
+		public ActionResult Details(long id = 0, bool html = false)
 		{
 			var acceptedRequest = db.AcceptedRequests.Find(id);
 			if (acceptedRequest == null)
             {
                 return HttpNotFound();
+			}
+
+			if (html)
+			{
+				return View(acceptedRequest);
 			}
 			var response = new Response { Data = ViewModels.AcceptedRequest.Convert(acceptedRequest) };
 			return Json(response, JsonRequestBehavior.AllowGet);
@@ -51,13 +62,23 @@ namespace CasualHeroes.Web.Controllers
         // POST: /AcceptedRequest/Create
 
         [HttpPost]
-        public ActionResult Create(AcceptedRequest acceptedrequest)
+		public ActionResult Create(AcceptedRequest acceptedrequest, bool html = false)
         {
             if (ModelState.IsValid)
             {
                 db.AcceptedRequests.Add(acceptedrequest);
 				db.SaveChanges();
+
+				if (html)
+				{
+					return RedirectToAction("Details", new { id = acceptedrequest.AcceptedRequestId });
+				}
 				return Json(new Response { Data = new { acceptedrequest.AcceptedRequestId } });
+			}
+
+			if (html)
+			{
+				return View(acceptedrequest);
 			}
 			return Json(new Response { Data = "Failed" });
         }
@@ -81,13 +102,24 @@ namespace CasualHeroes.Web.Controllers
         // POST: /AcceptedRequest/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(AcceptedRequest acceptedrequest)
-        {
+		public ActionResult Edit(long id, AcceptedRequest acceptedrequest, bool html = false)
+		{
+			acceptedrequest.AcceptedRequestId = id;
             if (ModelState.IsValid)
             {
                 db.Entry(acceptedrequest).State = EntityState.Modified;
 				db.SaveChanges();
+
+				if (html)
+				{
+					return RedirectToAction("Details", new { id = acceptedrequest.AcceptedRequestId });
+				}
 				return Json(new Response { Data = "Saved" });
+			}
+
+			if (html)
+			{
+				return View(acceptedrequest);
 			}
 			return Json(new Response { Data = "Failed" });
         }
@@ -109,11 +141,16 @@ namespace CasualHeroes.Web.Controllers
         // POST: /AcceptedRequest/Delete/5
 
         [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(long id)
+		public ActionResult DeleteConfirmed(long id, bool html = false)
         {
             AcceptedRequest acceptedrequest = db.AcceptedRequests.Find(id);
             db.AcceptedRequests.Remove(acceptedrequest);
 			db.SaveChanges();
+
+			if (html)
+			{
+				return RedirectToAction("Index");
+			}
 			return Json(new Response { Data = "Deleted" });
         }
 
