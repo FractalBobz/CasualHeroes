@@ -87,7 +87,7 @@ Win.hero={
 					email: email, phoneNumber: fval('phone')
 				};
 				$.userTable.insert(user).done(function () {
-					hero.iam=lS('name',name);
+					hero.iam=lS('name',fname+' '+sname);
 					hero.email=lS('email',email);
 					ihtml('field',"Created user! Go back and try again."); 
 				});
