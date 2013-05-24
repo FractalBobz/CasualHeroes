@@ -89,7 +89,7 @@ Win.hero={
 			});
 	},
 	lookAtMap:function() {
-		ihtml("field",'<canvas class="wide" style="height:13em" id="map_canvas"></canvas>');
+		ihtml("field",'<div class="wide" style="height:13em" id="map_canvas"></div>');
 		sT(function(){
 			var marker=[],
 				mapOptions = {
