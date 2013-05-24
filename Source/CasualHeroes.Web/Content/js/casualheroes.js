@@ -106,8 +106,13 @@ $.tagsTable = $.mobileClient.getTable("Tags");
 function lookAtMap() {
 	$.requestTable.orderByDescending("createdOn").take(10).read().done(function(requests) {
 		var people='';
+		var markers = [];
 		for(var i=0; i<requests.length; i++) {
 			var r = requests[i],sd=r.startDate;
+			var lat = requests[i],r.latittude;
+			var longi = requests[i],r.longitude;
+			var position = new google.maps.LatLng(lat, longi);
+			markers.push( new google.maps.marker({position:position, map:map}));
 			people+=r.title+" ("+sd.getHours()+":"+pad(sd.getMinutes(),2,0)+')<br>'
 		}
 		ihtml("field",people);
@@ -124,4 +129,22 @@ function getTags(){
 		});
 }
 getTags();
+
+function initialize() {
+var mapOptions = {
+  center: new google.maps.LatLng(51.5171, 0.1062), //I should probably be the users location sometime.
+  zoom: 8,
+  mapTypeId: google.maps.MapTypeId.HYBRID 
+};
+
+var map = new google.maps.Map(document.getElementById("map_canvas"),
+		mapOptions);
+	var marker = new google.maps.Marker({
+		   animation: google.maps.Animation.DROP,
+		   position: new google.maps.LatLng(51.522723, -0.085444),   //Us
+		   map:map
+		   });
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
 
