@@ -17,6 +17,7 @@ Win.hero={
 				}else if(d[0]=='Need'){
 					c='ur@'+hero.lat+','+hero.lon+'<br>Additional Details?<br>'
 						+'<input type="text" class="phi1"><br>'
+						+'Duration: (hours)<br><input type="text" class="phi1">1<br>'
 						+'<div class="butlink dib m0a" data-klik="1">Done</div>'
 				}else if(d[0]=='Details')
 					return jss.ajax('/Requests/Details/'+d[1],0,"ihtml('field',a.text);");
@@ -60,6 +61,7 @@ $.mobileClient = new WindowsAzure.MobileServiceClient(
 );
 $.userTable = $.mobileClient.getTable("Users");
 $.requestTable = $.mobileClient.getTable("Requests");
+$.tagsTable = $.mobileClient.getTable("Tags");
 
 function updateLatest10Requests() {
 	$.requestTable.orderByDescending("createdOn").take(10).read().done(function(requests) {
@@ -72,6 +74,16 @@ function updateLatest10Requests() {
 		ihtml("field",people);
 	});
 }
+
+function getTags(){
+	$.tagsTable.orderBy("tagName")
+		.select("tagName").read()
+		.done(function(tags) {
+			hero.skills=tags;
+			jss.hash.hashish();
+		});
+}
+getTags();
 
 var nextDate = new Date();
 $("#requestStartDate").val(nextDate);
@@ -124,6 +136,3 @@ $("#createRequest").click(function() {
 		}
 	});
 });
-
-
-jss.hash.hashish();
