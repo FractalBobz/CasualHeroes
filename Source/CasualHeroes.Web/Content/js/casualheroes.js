@@ -5,7 +5,7 @@ Win.hero={
 		var a=jss.hash,b=(a.place||'Home').ux(),c='',d=b.split('/');
 		if(!d[1]){ // stage 1: basic list
 			for(var i=0;i<hero.skills.length;i++)
-				c+='<div class="butlink" data-klik="jss.hash.go2(\''+b+'/'+hero.skills[i]+'\');">'+hero.skills[i]+'</div>'
+				c+='<div class="butlink dib" data-klik="jss.hash.go2(\''+b+'/'+hero.skills[i]+'\');">'+hero.skills[i]+'</div>'
 			if(b=='Help')b='I can help with:';
 			if(b=='Need')b='I need:';
 		}else if(!d[2]){ // stage 2: more details
@@ -84,19 +84,35 @@ Win.hero={
 			.done(function(tags) {
 				hero.skills=[];
 				for(var i=0;i<tags.length;i++)
-					hero.skills.push(tags[i].tagName);
+					hero.skills.push(tags[i].tagName.replace(/^\s+|\s+$/g,''));
 				jss.hash.hashish();
 			});
 	},
 	lookAtMap:function() {
-		$.requestTable.orderByDescending("createdOn").take(10).read().done(function(requests) {
-			var people='';
-			for(var i=0; i<requests.length; i++) {
-				var r = requests[i],sd=r.startDate;
-				people+=r.title+" ("+sd.getHours()+":"+pad(sd.getMinutes(),2,0)+')<br>'
-			}
-			ihtml("field",people);
-		});
+		ihtml("field",'<canvas class="wide" style="height:13em" id="map_canvas"></canvas>');
+		sT(function(){
+			var marker=[],
+				mapOptions = {
+					center: new google.maps.LatLng(hero.lat, hero.lon),
+					zoom: 8,
+					mapTypeId: google.maps.MapTypeId.HYBRID 
+				};
+			var map = new google.maps.Map(dge("map_canvas"),mapOptions);
+
+			$.requestTable.orderByDescending("createdOn").take(10).read().done(function(requests) {
+				var people='';
+				for(var i=0; i<requests.length; i++) {
+					var r = requests[i],sd=r.startDate;
+					people+=r.title+" ("+sd.getHours()+":"+pad(sd.getMinutes(),2,0)+')<br>';
+					marker[marker.length] = new google.maps.Marker({
+						 animation: google.maps.Animation.DROP,
+						 title: r.title,
+						 position: new google.maps.LatLng(r.latitude,r.longitude),
+						 map:map
+					});
+				}
+			});
+		},777);
 	}
 };
 
@@ -123,48 +139,6 @@ $.userTable = $.mobileClient.getTable("Users");
 $.requestTable = $.mobileClient.getTable("Requests");
 $.tagsTable = $.mobileClient.getTable("Tags");
 
-function lookAtMap() {
-	$.requestTable.orderByDescending("createdOn").take(10).read().done(function(requests) {
-		var people='';
-		var markers = [];
-		for(var i=0; i<requests.length; i++) {
-			var r = requests[i],sd=r.startDate;
-			var lat = requests[i],r.latittude;
-			var longi = requests[i],r.longitude;
-			var position = new google.maps.LatLng(lat, longi);
-			markers.push( new google.maps.marker({position:position, map:map}));
-			people+=r.title+" ("+sd.getHours()+":"+pad(sd.getMinutes(),2,0)+')<br>'
-		}
-		ihtml("field",people);
-	});
-}
-
-function getTags(){
-	$.tagsTable.orderBy("tagName").read()
-		.done(function(tags) {
-			hero.skills=[];
-			for(var i=0;i<tags.length;i++)
-				hero.skills.push(tags[i].tagName);
-			jss.hash.hashish();
-		});
-}
 hero.getTags();
 
-function initialize() {
-var mapOptions = {
-  center: new google.maps.LatLng(51.5171, 0.1062), //I should probably be the users location sometime.
-  zoom: 8,
-  mapTypeId: google.maps.MapTypeId.HYBRID 
-};
-
-var map = new google.maps.Map(document.getElementById("map_canvas"),
-		mapOptions);
-	var marker = new google.maps.Marker({
-		   animation: google.maps.Animation.DROP,
-		   position: new google.maps.LatLng(51.522723, -0.085444),   //Us
-		   map:map
-		   });
-}
-
-google.maps.event.addDomListener(window, 'load', initialize);
 
