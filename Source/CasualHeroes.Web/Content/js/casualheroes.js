@@ -76,10 +76,11 @@ function updateLatest10Requests() {
 }
 
 function getTags(){
-	$.tagsTable.orderBy("tagName")
-		.select("tagName").read()
+	$.tagsTable.orderBy("tagName").read()
 		.done(function(tags) {
-			hero.skills=tags;
+			hero.skills=[];
+			for(var i=0;i<tags.length;i++)
+				hero.skills.push(tags[i].tagName);
 			jss.hash.hashish();
 		});
 }
