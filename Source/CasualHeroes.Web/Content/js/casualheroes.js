@@ -1,5 +1,5 @@
 Win.hero={
-	iam:'James',lat:0,lon:0,
+	iam:'James',email:'james.counihan@evenbase.com',lat:0,lon:0,
 	skills:['Manual Dexterity','Moral Support','Technical Expertise','Transport','Food & Drink'],
 	hash:function(){
 		var a=jss.hash,b=(a.place||'Home').ux(),c='',d=b.split('/');
@@ -15,10 +15,7 @@ Win.hero={
 				if(d[0]=='Help'){
 					c='ur@'+hero.lat+','+hero.lon+'<br>nobody wants your help'
 				}else if(d[0]=='Need'){
-					c='ur@'+hero.lat+','+hero.lon+'<br>Additional Details?<br>'
-						+'<input type="text" class="phi1"><br>'
-						+'Duration: (hours)<br><input type="text" class="phi1">1<br>'
-						+'<div class="butlink dib m0a" data-klik="1">Done</div>'
+					c='ur@'+hero.lat+','+hero.lon+hero.c_NeedDetails;
 				}else if(d[0]=='Details')
 					return jss.ajax('/Requests/Details/'+d[1],0,"ihtml('field',a.text);");
 				else if(d[0]=='Requests')return jss.ajax('/Requests',
@@ -39,11 +36,54 @@ Win.hero={
 	setupgeo:function(a,e){
 		if(!e&&!a&&'geolocation' in N)N.geolocation.getCurrentPosition(hero.setupgeo);
 		else if(!e&&a)hero.lat=a.coords.latitude,hero.lon=a.coords.longitude;
+	},
+	newPlea:function(){
+		var addinfo=fval('addinfo'),duration=+fval('duration');
+		$.userTable.where({ email: hero.email }).read()
+		.done(function (results) {
+			if (results.length == 1) {
+				var user = results[0], startDate = new Date(), endDate = startDate;
+				endDate.setHours(startDate.getHours()+duration);
+				var request = {
+					userId: parseInt(user.id),
+					title: addinfo, description: addinfo,
+					address: '10 King Road',
+					latitude: hero.lat, longitude: hero.lon,
+					tags: jss.hash.place.split('/')[1],
+					startDate: startDate, endDate: endDate
+				};
+				$.requestTable.insert(request).done(function () {
+						updateLatest10Requests();
+				});
+			} else {
+					ihtml('field',hero.c_CreateAccount);
+			}
+		});
+	},
+	newUser:function() {
+		var email=fval('email'),sname=fval('name').split(' '),fname=sname.shift();
+		sname=sname.join(' ');
+		$.userTable.where({ email: email }).read().done(function(results) {
+			if (results.length > 0) {
+					ihtml('field',"User " + email + " already exists!");
+			} else {
+				var user = {
+					identifier: randy(99999),
+					firstName: fname, lastName: sname,
+					email: email, phoneNumber: fval('phone')
+				};
+				$.userTable.insert(user).done(function () {
+					ihtml('field',"Created user!"); 
+				});
+			}
+		});
 	}
 };
 
 hero.home=ihtml('field');
 hero.c_About=ihtml('c_About');
+hero.c_NeedDetails=ihtml('c_NeedDetails');
+hero.c_CreateAccount=ihtml('c_CreateAccount');
 jss.b3d.attach3d();
 hero.setupgeo();
 
@@ -86,54 +126,3 @@ function getTags(){
 }
 getTags();
 
-var nextDate = new Date();
-$("#requestStartDate").val(nextDate);
-
-$("#createFirstUser").click(function() {
-	var usersEmail = $("#emailAddress").val();
-	$.userTable.where({ email: usersEmail }).read().done(function(results) {
-		if (results.length > 0) {
-				alert("User " + usersEmail + " already exists!");
-		} else {
-			var user = {
-				identifier: $("#identifier").val(),
-				email: usersEmail,
-				firstName: $("#firstName").val(),
-				lastName: $("#lastName").val(),
-				phoneNumber: $("#phoneNumber").val()
-			};
-			$.userTable.insert(user).done(function () { alert("Created user!"); });
-		}
-	});
-});
-
-$("#createRequest").click(function() {
-	var usersEmail = $("#requestorEmailAddress").val();
-	$.userTable.where({ email: usersEmail }).read().done(function (results) {
-		if (results.length == 1) {
-			var user = results[0];
-			// set up now -> now + 1h
-			var startDate = new Date(Date.parse($("#requestStartDate").val()));
-			var endDate = startDate;
-			endDate.setHours(startDate.getHours() + parseInt($("#requestDuration").val()));
-
-			var request = {
-				userId: parseInt(user.id),
-				title: $("#requestTitle").val(),
-				description: $("#requestDescription").val(),
-				address: $("#requestAddress").val(),
-				latitude: parseFloat($("#requestLat").val()),
-				longitude: parseFloat($("#requestLong").val()),
-				tags: $("#requestTags").val(),
-				startDate: startDate,
-				endDate: endDate
-			};
-			
-			$.requestTable.insert(request).done(function () {
-					updateLatest10Requests();
-			});
-		} else {
-				erk("User " + usersEmail + "not found or more than one user!");
-		}
-	});
-});
