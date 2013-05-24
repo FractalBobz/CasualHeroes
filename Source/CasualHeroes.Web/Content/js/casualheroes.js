@@ -132,7 +132,7 @@ Win.hero={
 				infos[infos.length] = new google.maps.InfoWindow({
 					content: r.description
 				});
-				google.maps.event.addListener([marker.length-1], 'click', function() {
+				google.maps.event.addListener(marker[marker.length-1], 'click', function() {
 				    map.setCenter(marker.getPosition());
 				    infos[infos.length-1].open({map:map, anchor:[marker.length-1]});
 				  });
