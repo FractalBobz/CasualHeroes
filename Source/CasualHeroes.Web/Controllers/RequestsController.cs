@@ -23,11 +23,10 @@ namespace CasualHeroes.Web.Controllers
 			if (latitude == null || longitude == null)
 			{
 				requests = db.Requests
-					.Include(r => r.User)
-					.Include(r => r.RequestTags)
-					.Where(r => r.EndDate > DateTime.UtcNow)
-					.OrderByDescending(r => r.EndDate)
-					.Take(10);
+				             .Include(r => r.User)
+				             .Include(r => r.RequestTags)
+				             .Where(r => r.EndDate > DateTime.UtcNow)
+				             .OrderByDescending(r => r.EndDate);
 			}
 			else
 			{
