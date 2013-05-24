@@ -18,14 +18,14 @@ namespace CasualHeroes.Web.Controllers
 
 		public ActionResult Index(double latitude, double longitude)
 		{
-			return Json(ViewModels.Request.Convert(
+			var response = new Response { Data = ViewModels.Request.Convert(
 				db.Requests
 					.Where(r => r.Latitude != null && r.Longitude != null)
 					.OrderBy(r => Math.Pow((r.Latitude.Value - latitude) * (r.Latitude.Value - latitude) + (r.Longitude.Value - longitude) * (r.Longitude.Value - longitude), 0.5))
 					.Take(10)
 				),
-				JsonRequestBehavior.AllowGet
-			);
+			};
+			return Json(response, JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -38,7 +38,8 @@ namespace CasualHeroes.Web.Controllers
 			{
 				return HttpNotFound();
 			}
-			return Json(ViewModels.Request.Convert(request), JsonRequestBehavior.AllowGet);
+	        var response = new Response { Data = ViewModels.Request.Convert(request) };
+			return Json(response, JsonRequestBehavior.AllowGet);
         }
 
 		//
@@ -59,10 +60,10 @@ namespace CasualHeroes.Web.Controllers
 			{
 				db.Requests.Add(request);
 				db.SaveChanges();
-				return RedirectToAction("Details", new { id = request.RequestId });
+				return Json(new Response { Data = "Added" });
 			}
 
-			return View(request);
+			return Json(new Response { Data = "Failed" });
         }
 
 		//
@@ -89,9 +90,9 @@ namespace CasualHeroes.Web.Controllers
 			{
 				db.Entry(request).State = EntityState.Modified;
 				db.SaveChanges();
-		        return RedirectToAction("Details", new { id = request.RequestId });
+				return Json(new Response { Data = "Saved" });
 			}
-	        return View(request);
+			return Json(new Response { Data = "Failed" });
 		}
 
         // GET: /Requests/Delete/5
@@ -116,7 +117,7 @@ namespace CasualHeroes.Web.Controllers
 			}
 			db.Requests.Remove(request);
 			db.SaveChanges();
-			return Json("Deleted");
+			return Json(new Response { Data = "Deleted"} );
         }
 
 		protected override void Dispose(bool disposing)

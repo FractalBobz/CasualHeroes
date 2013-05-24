@@ -18,7 +18,8 @@ namespace CasualHeroes.Web.Controllers
 
         public ActionResult Index()
         {
-	        return Json(ViewModels.User.Convert(db.Users), JsonRequestBehavior.AllowGet);
+	        var response = new Response { Data = ViewModels.User.Convert(db.Users) };
+			return Json(response, JsonRequestBehavior.AllowGet);
         }
 
         //
@@ -31,7 +32,8 @@ namespace CasualHeroes.Web.Controllers
             {
                 return HttpNotFound();
 			}
-			return Json(ViewModels.User.Convert(user), JsonRequestBehavior.AllowGet);
+			var response = new Response { Data = ViewModels.User.Convert(user) };
+			return Json(response, JsonRequestBehavior.AllowGet);
         }
 
         //
@@ -51,11 +53,11 @@ namespace CasualHeroes.Web.Controllers
             if (ModelState.IsValid)
             {
                 db.Users.Add(user);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+				db.SaveChanges();
+				return Json(new Response { Data = "Added" });
             }
 
-            return View(user);
+			return Json(new Response { Data = "Failed" });
         }
 
         //
@@ -81,10 +83,10 @@ namespace CasualHeroes.Web.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(user);
+				db.SaveChanges();
+				return Json(new Response { Data = "Saved" });
+			}
+			return Json(new Response { Data = "Failed" });
         }
 
         //
@@ -108,8 +110,8 @@ namespace CasualHeroes.Web.Controllers
         {
             User user = db.Users.Find(id);
             db.Users.Remove(user);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+			db.SaveChanges();
+			return Json(new Response { Data = "Deleted" });
         }
 
         protected override void Dispose(bool disposing)
