@@ -88,9 +88,11 @@ Win.hero={
 				jss.hash.hashish();
 			});
 	},
+
 	lookAtMap:function() {
 		ihtml("field",'<div class="wide" style="height:'+(jss.y1-12)+'px" id="map_canvas"></div>');	
 		var marker=[],
+		var infos=[], //Naughty I know
 			mapOptions = {
 				center: new google.maps.LatLng(hero.lat, hero.lon),
 				zoom: 8,
@@ -109,10 +111,20 @@ Win.hero={
 					 position: new google.maps.LatLng(r.latitude,r.longitude),
 					 map:map
 				});
+				infos[infos.length] = new google.maps.InfoWindow({
+					content: r.description
+				});
+				google.maps.event.addListener([marker.length-1], 'click', function() {
+				    map.setCenter(marker.getPosition());
+				    infos[infos.length-1].open(map:map, anchor:[marker.length-1]);
+				  });
+							
 			}
 		});
 	}
 };
+
+
 
 hero.home=ihtml('field');
 hero.c_About=ihtml('c_About');
