@@ -119,7 +119,7 @@ Win.hero={
 			var people='';
 			for(var i=0; i<requests.length; i++) {
 				var r = requests[i],sd=r.startDate;
-				if(tag && r.tag!=tag)continue;
+				if(tag && r.tags!=tag)continue;
 				people+=r.title+" ("+sd.getHours()+":"+pad(sd.getMinutes(),2,0)+')<br>';
 				marker[marker.length] = new google.maps.Marker({
 					 animation: google.maps.Animation.DROP,
