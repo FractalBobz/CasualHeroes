@@ -140,7 +140,7 @@ Win.hero={
 	}
 };
 
-
+var updateLatest10Requests=hero.lookAtMap;
 
 hero.home=ihtml('field');
 hero.c_About=ihtml('c_About');
