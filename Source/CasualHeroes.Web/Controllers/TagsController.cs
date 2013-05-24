@@ -17,21 +17,32 @@ namespace CasualHeroes.Web.Controllers
         //
         // GET: /Tags/
 
-        public ActionResult Index()
+		public ActionResult Index(bool html = false)
         {
-			var response = new Response { Data = ViewModels.Tag.Convert(db.Tags) };
+	        var tags = db.Tags;
+			
+			if (html)
+			{
+				return View(tags);
+			}
+			var response = new Response { Data = ViewModels.Tag.Convert(tags) };
 			return Json(response, JsonRequestBehavior.AllowGet);
         }
 
         //
         // GET: /Tags/Details/5
 
-        public ActionResult Details(long id = 0)
+		public ActionResult Details(long id = 0, bool html = false)
         {
-            Tag tag = db.Tags.Find(id);
+            var tag = db.Tags.Find(id);
             if (tag == null)
             {
                 return HttpNotFound();
+			}
+
+			if (html)
+			{
+				return View(tag);
 			}
 			var response = new Response { Data = ViewModels.Tag.Convert(tag) };
 			return Json(response, JsonRequestBehavior.AllowGet);
@@ -49,15 +60,24 @@ namespace CasualHeroes.Web.Controllers
         // POST: /Tags/Create
 
         [HttpPost]
-        public ActionResult Create(Tag tag)
+		public ActionResult Create(Tag tag, bool html = false)
         {
             if (ModelState.IsValid)
             {
                 db.Tags.Add(tag);
 				db.SaveChanges();
+
+				if (html)
+				{
+					return RedirectToAction("Details", new { id = tag.TagId });
+				}
 				return Json(new Response { Data = new { tag.TagId } });
             }
 
+			if (html)
+			{
+				return View(tag);
+			}
 			return Json(new Response { Data = "Failed" });
         }
 
@@ -66,7 +86,7 @@ namespace CasualHeroes.Web.Controllers
 
         public ActionResult Edit(long id = 0)
         {
-            Tag tag = db.Tags.Find(id);
+            var tag = db.Tags.Find(id);
             if (tag == null)
             {
                 return HttpNotFound();
@@ -78,14 +98,24 @@ namespace CasualHeroes.Web.Controllers
         // POST: /Tags/Edit/5
 
         [HttpPost]
-		public ActionResult Edit(long id, Tag tag)
+		public ActionResult Edit(long id, Tag tag, bool html = false)
 		{
 			tag.TagId = id;
             if (ModelState.IsValid)
             {
                 db.Entry(tag).State = EntityState.Modified;
 				db.SaveChanges();
+
+				if (html)
+				{
+					return RedirectToAction("Details", new { id = tag.TagId });
+				}
 				return Json(new Response { Data = "Saved" });
+			}
+
+			if (html)
+			{
+				return View(tag);
 			}
 			return Json(new Response { Data = "Failed" });
         }
@@ -107,11 +137,16 @@ namespace CasualHeroes.Web.Controllers
         // POST: /Tags/Delete/5
 
         [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(long id)
+		public ActionResult DeleteConfirmed(long id, bool html = false)
         {
-            Tag tag = db.Tags.Find(id);
+            var tag = db.Tags.Find(id);
             db.Tags.Remove(tag);
 			db.SaveChanges();
+
+			if (html)
+			{
+				return RedirectToAction("Index");
+			}
 			return Json(new Response { Data = "Deleted" });
         }
 

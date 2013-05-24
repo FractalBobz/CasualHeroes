@@ -17,21 +17,31 @@ namespace CasualHeroes.Web.Controllers
 		//
 		// GET: /Users/
 
-		public ActionResult Index()
+		public ActionResult Index(bool html = false)
 		{
-			var response = new Response { Data = ViewModels.User.Convert(db.Users.Include(u => u.Requests).Include(u => u.UserTags)) };
+			var users = db.Users.Include(u => u.Requests).Include(u => u.UserTags);
+			if (html)
+			{
+				return View(users);
+			}
+			var response = new Response { Data = ViewModels.User.Convert(users) };
 			return Json(response, JsonRequestBehavior.AllowGet);
 		}
 
 		//
 		// GET: /Users/Details/5
 
-		public ActionResult Details(long id = 0)
+		public ActionResult Details(long id = 0, bool html = false)
 		{
 			var user = db.Users.Find(id);
 			if (user == null)
 			{
 				return HttpNotFound();
+			}
+
+			if (html)
+			{
+				return View(user);
 			}
 			var response = new Response { Data = ViewModels.User.Convert(user) };
 			return Json(response, JsonRequestBehavior.AllowGet);
@@ -49,7 +59,7 @@ namespace CasualHeroes.Web.Controllers
 		// POST: /Users/Create
 
 		[HttpPost]
-		public ActionResult Create(User user)
+		public ActionResult Create(User user, bool html = false)
 		{
 			user.CreatedOn = DateTime.UtcNow;
 			var tags = TagsSplitter.Split(db, user.Tags);
@@ -58,9 +68,18 @@ namespace CasualHeroes.Web.Controllers
 			{
 				db.Users.Add(user);
 				db.SaveChanges();
+
+				if (html)
+				{
+					return RedirectToAction("Details", new { id = user.UserId });
+				}
 				return Json(new Response { Data = new { user.UserId } });
 			}
 
+			if (html)
+			{
+				return View(user);
+			}
 			return Json(new Response { Data = "Failed" });
 		}
 
@@ -81,7 +100,7 @@ namespace CasualHeroes.Web.Controllers
 		// POST: /Users/Edit/5
 
 		[HttpPost]
-		public ActionResult Edit(long id, User user)
+		public ActionResult Edit(long id, User user, bool html = false)
 		{
 			user.UserId = id;
 			var tags = TagsSplitter.Split(db, user.Tags);
@@ -100,7 +119,17 @@ namespace CasualHeroes.Web.Controllers
 			{
 				db.Entry(user).State = EntityState.Modified;
 				db.SaveChanges();
+
+				if (html)
+				{
+					return RedirectToAction("Details", new { id = user.UserId });
+				}
 				return Json(new Response { Data = "Saved" });
+			}
+
+			if (html)
+			{
+				return View(user);
 			}
 			return Json(new Response { Data = "Failed" });
 		}
@@ -122,11 +151,16 @@ namespace CasualHeroes.Web.Controllers
 		// POST: /Users/Delete/5
 
 		[HttpPost, ActionName("Delete")]
-		public ActionResult DeleteConfirmed(long id)
+		public ActionResult DeleteConfirmed(long id, bool html = false)
 		{
 			User user = db.Users.Find(id);
 			db.Users.Remove(user);
 			db.SaveChanges();
+
+			if (html)
+			{
+				return RedirectToAction("Index");
+			}
 			return Json(new Response { Data = "Deleted" });
 		}
 

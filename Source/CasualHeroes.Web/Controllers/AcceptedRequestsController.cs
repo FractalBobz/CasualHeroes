@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Data.Entity;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using CasualHeroes.Web.Helpers;
 using CasualHeroes.Web.Models;
@@ -143,7 +139,7 @@ namespace CasualHeroes.Web.Controllers
         [HttpPost, ActionName("Delete")]
 		public ActionResult DeleteConfirmed(long id, bool html = false)
         {
-            AcceptedRequest acceptedrequest = db.AcceptedRequests.Find(id);
+            var acceptedrequest = db.AcceptedRequests.Find(id);
             db.AcceptedRequests.Remove(acceptedrequest);
 			db.SaveChanges();
 
