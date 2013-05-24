@@ -14,7 +14,8 @@ Win.hero={
 				b='Okay '+hero.iam;
 				if(d[0]=='Help'){
 					var mytag=d[1];
-					c='ur@'+hero.lat+','+hero.lon+'<br>nobody wants your '+mytag+' help';
+					// c='ur@'+hero.lat+','+hero.lon+'<br>nobody wants your '+mytag+' help';
+					hero.lookAtMap(mytag);
 				}else if(d[0]=='Need'){
 					c='ur@'+hero.lat+','+hero.lon+hero.c_NeedDetails;
 				}else if(d[0]=='Details')
@@ -100,7 +101,7 @@ Win.hero={
 			});
 	},
 
-	lookAtMap:function() {
+	lookAtMap:function(tag) {
 		ihtml("field",'<div class="wide" style="height:'+(jss.y1-12)+'px" id="map_canvas"></div>');	
 		var infos=[];
 		var marker=[],
@@ -115,6 +116,7 @@ Win.hero={
 			var people='';
 			for(var i=0; i<requests.length; i++) {
 				var r = requests[i],sd=r.startDate;
+				if(tag && r.tag!=tag)continue;
 				people+=r.title+" ("+sd.getHours()+":"+pad(sd.getMinutes(),2,0)+')<br>';
 				marker[marker.length] = new google.maps.Marker({
 					 animation: google.maps.Animation.DROP,
