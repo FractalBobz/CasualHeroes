@@ -89,10 +89,10 @@ Win.hero={
 			});
 	},
 	lookAtMap:function() {
-		ihtml("field",'<canvas id="map_canvas"></canvas>');
+		ihtml("field",'<canvas class="wide" style="height:13em" id="map_canvas"></canvas>');
 		var marker=[],
 			mapOptions = {
-				center: new google.maps.LatLng(51.5171, 0.1062), //I should probably be the users location sometime.
+				center: new google.maps.LatLng(hero.lat, hero.lon),
 				zoom: 8,
 				mapTypeId: google.maps.MapTypeId.HYBRID 
 			};
@@ -106,7 +106,7 @@ Win.hero={
 				marker[marker.length] = new google.maps.Marker({
 					 animation: google.maps.Animation.DROP,
 					 title: r.title,
-					 position: new google.maps.LatLng(r.longitude,r.latitude),
+					 position: new google.maps.LatLng(r.latitude,r.longitude),
 					 map:map
 				});
 			}
