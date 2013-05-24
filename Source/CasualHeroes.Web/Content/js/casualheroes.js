@@ -129,7 +129,7 @@ Win.hero={
 				});
 				google.maps.event.addListener([marker.length-1], 'click', function() {
 				    map.setCenter(marker.getPosition());
-				    infos[infos.length-1].open(map:map, anchor:[marker.length-1]);
+				    infos[infos.length-1].open({map:map, anchor:[marker.length-1]});
 				  });
 							
 			}
