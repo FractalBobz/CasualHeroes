@@ -8,15 +8,22 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
+    <style>
+        #data-entry, #data-login {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <div>
+    <div id="data-entry">
         <h2>Data Retrieval</h2>
+        <h3>Welcome back: <span id="user-id"></span></h3>
         
         <div>
             <fieldset>
                 <legend>Latest 10 Requests</legend>
                 <div id="latest10Requests"></div>
+                <button id="refreshData">Refresh</button>
             </fieldset>
         </div>
         <h2>Data Capture</h2>
@@ -47,21 +54,32 @@
         </div>
 
     </div>
+    
+    <div id="data-login">
+        <h2>Authentication</h2>
+        <fieldset>
+            <legend>Login</legend>
+            <button id="loginTwitter" data-role="twitter">Twitter</button>
+            <button id="loginFacebook" data-role="facebook">Facebook</button>
+        </fieldset>
+    </div>
 
     <script src="https://casualheroes.azure-mobile.net/client/MobileServices.Web-1.0.0.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
 
     <script type="text/javascript">
 
-        $(function () {
-            
+        $(document).ready(function () {
+
             $.mobileClient = new WindowsAzure.MobileServiceClient("https://casualheroes.azure-mobile.net/",
                                                                   "LjjlwWXmUrgfNWDYduASKkZDtIOTGq99");
+
             $.userTable = $.mobileClient.getTable("Users");
             $.requestTable = $.mobileClient.getTable("Requests");
 
             function updateLatest10Requests() {
-                $.requestTable.orderByDescending("createdOn").take(10).read().done(function(requests) {
+
+                $.requestTable.orderByDescending("createdOn").take(10).read().done(function (requests) {
                     var ul = $("<ul />");
                     for (var i = 0; i < requests.length; i++) {
                         var request = requests[i];
@@ -71,12 +89,13 @@
                 });
             }
 
-            var nextDate = new Date();
-            $("#requestStartDate").val(nextDate);
-            
-            $("#createFirstUser").click(function() {
+            $('#refreshData').click(function () {
+                updateLatest10Requests();
+            });
+
+            $("#createFirstUser").click(function () {
                 var usersEmail = $("#emailAddress").val();
-                $.userTable.where({ email: usersEmail }).read().done(function(results) {
+                $.userTable.where({ email: usersEmail }).read().done(function (results) {
                     if (results.length > 0) {
                         alert("User " + usersEmail + " already exists!");
                     } else {
@@ -92,16 +111,16 @@
                     }
                 });
             });
-            
-            $("#createRequest").click(function() {
+
+            $("#createRequest").click(function () {
 
                 var usersEmail = $("#requestorEmailAddress").val();
-                
+
                 $.userTable.where({ email: usersEmail }).read().done(function (results) {
                     if (results.length == 1) {
 
                         var user = results[0];
-                        
+
                         // set up now -> now + 1h
                         var startDate = new Date(Date.parse($("#requestStartDate").val()));
                         var endDate = startDate;
@@ -118,17 +137,57 @@
                             startDate: startDate,
                             endDate: endDate
                         };
-                        
+
+                        console.log(request);
+
                         $.requestTable.insert(request).done(function () {
                             updateLatest10Requests();
                         });
+
                     } else {
                         alert("User " + usersEmail + "not found or more than one user!");
                     }
                 });
             });
 
-            updateLatest10Requests();
+            if ($.mobileClient.currentUser !== null) {
+
+                $('#data-entry').show();
+                $('#data-login').hide();
+
+                var nextDate = new Date();
+                $("#requestStartDate").val(nextDate);
+
+            } else {
+
+                $('#data-entry').hide();
+                $('#data-login').show();
+                
+                function authenticateUser(provider) {
+
+                    $.mobileClient.login(provider).then(function () {
+
+                        $('#user-id').text($.mobileClient.currentUser.userId);
+                        $('#data-entry').show();
+                        $('#data-login').hide();
+                        
+                        updateLatest10Requests();
+
+                    }, function (error) {
+                        
+                    });
+
+                }
+
+                $('#loginTwitter').click(function () {
+                    authenticateUser('twitter');
+                });
+
+                $('#loginFacebook').click(function () {
+                    authenticateUser('facebook');
+                });
+
+            }
         });
 
     </script>
