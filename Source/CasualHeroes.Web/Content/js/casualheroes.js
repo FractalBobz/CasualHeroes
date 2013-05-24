@@ -15,7 +15,7 @@ Win.hero={
 				if(d[0]=='Help'){
 					var mytag=d[1];
 					// c='ur@'+hero.lat+','+hero.lon+'<br>nobody wants your '+mytag+' help';
-					hero.lookAtMap(mytag);
+					return hero.lookAtMap(mytag);
 				}else if(d[0]=='Need'){
 					c='ur@'+hero.lat+','+hero.lon+hero.c_NeedDetails;
 				}else if(d[0]=='Details')
