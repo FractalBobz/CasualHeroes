@@ -138,6 +138,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Content\css\jss.css" />
     <Content Include="Content\img\CH.png" />
+    <Content Include="Content\img\favicon.ico" />
+    <Content Include="Content\img\icon.png" />
     <Content Include="Content\js\boot.js" />
     <Content Include="Content\js\casualheroes.js" />
     <Content Include="Content\js\core.js" />
