@@ -12,7 +12,13 @@ namespace CasualHeroes.Web
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-			
+
+			routes.MapRoute(
+				name: "Html",
+				url: "html/{controller}/{action}/{id}",
+				defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional, html = true }
+			);
+
 			routes.MapRoute(
 		        name: "Default",
 		        url: "{controller}/{action}/{id}",
