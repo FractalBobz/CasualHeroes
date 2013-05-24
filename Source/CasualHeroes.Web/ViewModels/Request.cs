@@ -21,7 +21,7 @@ namespace CasualHeroes.Web.ViewModels
 			{
 				return new RequestUser
 				{
-					Tags = user.UserTags.Select(ut => ut.Tag.Name).ToList(),
+					Tags = user.UserTags.Where(ut => ut.Tag != null).Select(ut => ut.Tag.Name).ToList(),
 					UserId = user.UserId,
 					Identifier = user.Identifier,
 					FirstName = user.FirstName,
@@ -56,7 +56,7 @@ namespace CasualHeroes.Web.ViewModels
 			return new Request
 			{
 				User = request.User == null ? null : RequestUser.Convert(request.User),
-				Tags = request.RequestTags.Select(rt => rt.Tag.Name).ToList(),
+				Tags = request.RequestTags.Where(rt => rt.Tag != null).Select(rt => rt.Tag.Name).ToList(),
 				Participants = RequestUser.Convert(request.AcceptedRequests.Select(ar => ar.User)).ToList(),
 				RequestId = request.RequestId,
 				Title = request.Title,

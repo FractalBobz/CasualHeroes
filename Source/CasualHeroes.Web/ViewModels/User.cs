@@ -30,7 +30,7 @@ namespace CasualHeroes.Web.ViewModels
 					Title = request.Title,
 					Description = request.Description,
 					Address = request.Address,
-					Tags = request.RequestTags.Select(rt => rt.Tag.Name).ToList(),
+					Tags = request.RequestTags.Where(rt => rt.Tag != null).Select(rt => rt.Tag.Name).ToList(),
 					Latitude = request.Latitude,
 					Longitude = request.Longitude,
 					StartDate = request.StartDate,
@@ -69,7 +69,7 @@ namespace CasualHeroes.Web.ViewModels
 				PhoneNumber = user.PhoneNumber,
 				DetailsUrl = "/Users/Details/" + user.UserId,
 				Requests = UserRequest.Convert(user.Requests).ToList(),
-				Tags = user.UserTags.Select(ut => ut.Tag.Name).ToList()
+				Tags = user.UserTags.Where(ut => ut.Tag != null).Select(ut => ut.Tag.Name).ToList()
 			};
 		}
 
