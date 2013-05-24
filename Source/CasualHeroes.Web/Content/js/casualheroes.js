@@ -70,12 +70,17 @@ Win.hero={
 			lS('email',r.email);
 		});
 	},
+	
+	
 	newUser:function() {
 		var email=fval('email'),sname=fval('name').split(' '),fname=sname.shift();
 		sname=sname.join(' ');
 		$.userTable.where({ email: email }).read().done(function(results) {
 			if (results.length > 0) {
-					ihtml('field',"You have somehow failed.");
+					var r=results[0];
+					hero.iam=fval('name',r.firstName+' '+r.lastName);
+					hero.email=fval('email',r.email);
+					ihtml('field',"Created user! Go back and try again."); 
 			} else {
 				var user = {
 					tags: jss.hash.place.split('/')[1],
