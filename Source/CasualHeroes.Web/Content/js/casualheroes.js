@@ -70,16 +70,14 @@ Win.hero={
 			lS('email',r.email);
 		});
 	},
-	
-	
 	newUser:function() {
 		var email=fval('email'),sname=fval('name').split(' '),fname=sname.shift();
 		sname=sname.join(' ');
 		$.userTable.where({ email: email }).read().done(function(results) {
 			if (results.length > 0) {
 					var r=results[0];
-					hero.iam=fval('name',r.firstName+' '+r.lastName);
-					hero.email=fval('email',r.email);
+					hero.iam=lS('name',r.firstName+' '+r.lastName);
+					hero.email=lS('email',r.email);
 					ihtml('field',"Created user! Go back and try again."); 
 			} else {
 				var user = {
@@ -89,8 +87,8 @@ Win.hero={
 					email: email, phoneNumber: fval('phone')
 				};
 				$.userTable.insert(user).done(function () {
-					hero.iam=fval('name',name);
-					hero.email=fval('email',email);
+					hero.iam=lS('name',name);
+					hero.email=lS('email',email);
 					ihtml('field',"Created user! Go back and try again."); 
 				});
 			}
