@@ -1,5 +1,5 @@
 Win.hero={
-	iam:'James',email:'james.counihan@evenbase.com',lat:0,lon:0,
+	iam:lS('name'),email:lS('email'),lat:0,lon:0,
 	skills:['Manual Dexterity','Moral Support','Technical Expertise','Transport','Food & Drink'],
 	hash:function(){
 		var a=jss.hash,b=(a.place||'Home').ux(),c='',d=b.split('/');
@@ -61,20 +61,31 @@ Win.hero={
 			}
 		});
 	},
+	checkMe:function() {
+		$.userTable.where({ email: hero.email }).read().done(function(results) {
+			if (results.length!=1)return;
+			var r=results[0];
+			lS('name',r.fname+' '+r.sname);
+			lS('email',r.email);
+		});
+	},
 	newUser:function() {
 		var email=fval('email'),sname=fval('name').split(' '),fname=sname.shift();
 		sname=sname.join(' ');
 		$.userTable.where({ email: email }).read().done(function(results) {
 			if (results.length > 0) {
-					ihtml('field',"User " + email + " already exists!");
+					ihtml('field',"You have somehow failed.");
 			} else {
 				var user = {
+					tags: jss.hash.place.split('/')[1],
 					identifier: randy(99999),
 					firstName: fname, lastName: sname,
 					email: email, phoneNumber: fval('phone')
 				};
 				$.userTable.insert(user).done(function () {
-					ihtml('field',"Created user!"); 
+					hero.iam=fval('name');
+					hero.email=email;
+					ihtml('field',"Created user! Go back and try again."); 
 				});
 			}
 		});
@@ -88,9 +99,11 @@ Win.hero={
 				jss.hash.hashish();
 			});
 	},
+
 	lookAtMap:function() {
 		ihtml("field",'<div class="wide" style="height:'+(jss.y1-12)+'px" id="map_canvas"></div>');	
 		var marker=[],
+		var infos=[], //Naughty I know
 			mapOptions = {
 				center: new google.maps.LatLng(hero.lat, hero.lon),
 				zoom: 8,
@@ -109,10 +122,20 @@ Win.hero={
 					 position: new google.maps.LatLng(r.latitude,r.longitude),
 					 map:map
 				});
+				infos[infos.length] = new google.maps.InfoWindow({
+					content: r.description
+				});
+				google.maps.event.addListener([marker.length-1], 'click', function() {
+				    map.setCenter(marker.getPosition());
+				    infos[infos.length-1].open(map:map, anchor:[marker.length-1]);
+				  });
+							
 			}
 		});
 	}
 };
+
+
 
 hero.home=ihtml('field');
 hero.c_About=ihtml('c_About');
