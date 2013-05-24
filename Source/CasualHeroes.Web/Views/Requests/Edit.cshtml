@@ -9,22 +9,117 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Create</title>
+    <title>Edit</title>
 </head>
 <body>
+    <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    
+    @using (Html.BeginForm()) {
+        @Html.ValidationSummary(true)
+    
+        <fieldset>
+            <legend>Request</legend>
+    
+            @Html.HiddenFor(model => model.RequestId)
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.UserId, "User")
+            </div>
+            <div class="editor-field">
+                @Html.DropDownList("UserId", String.Empty)
+                @Html.ValidationMessageFor(model => model.UserId)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Title)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Title)
+                @Html.ValidationMessageFor(model => model.Title)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Description)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Description)
+                @Html.ValidationMessageFor(model => model.Description)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Address)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Address)
+                @Html.ValidationMessageFor(model => model.Address)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Latitude)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Latitude)
+                @Html.ValidationMessageFor(model => model.Latitude)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Longitude)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Longitude)
+                @Html.ValidationMessageFor(model => model.Longitude)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Tags)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Tags)
+                @Html.ValidationMessageFor(model => model.Tags)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.StartDate)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.StartDate)
+                @Html.ValidationMessageFor(model => model.StartDate)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.EndDate)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.EndDate)
+                @Html.ValidationMessageFor(model => model.EndDate)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.CreatedBy)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.CreatedBy)
+                @Html.ValidationMessageFor(model => model.CreatedBy)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.CreatedOn)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.CreatedOn)
+                @Html.ValidationMessageFor(model => model.CreatedOn)
+            </div>
+    
+            <p>
+                <input type="submit" value="Save" />
+            </p>
+        </fieldset>
+    }
+    
     <div>
-	    <form method="POST">
-		    Title: <input name="Title" value="@Model.Title"/><br/>
-		    Description: <input name="Description" value="@Model.Description"/><br/>
-		    Address: <input name="Address" value="@Model.Address"/><br/>
-		    Tags: <input name="Tags" value="@Model.Tags"/><br/>
-		    Latitude: <input name="Latitude" value="@Model.Latitude"/><br/>
-		    Longitude: <input name="Longitude" value="@Model.Longitude"/><br/>
-		    StartDate: <input name="StartDate" type="datetime" value="@Model.StartDate"/><br/>
-		    EndDate: <input name="EndDate" type="datetime" value="@Model.EndDate"/><br/>
-		    CreatedBy: <input name="CreatedBy" value="@Model.CreatedBy"/><br/>
-			<button>Submit</button>
-	    </form>
+        @Html.ActionLink("Back to List", "Index")
     </div>
 </body>
 </html>
