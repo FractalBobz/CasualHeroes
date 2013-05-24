@@ -1,0 +1,30 @@
+﻿@model CasualHeroes.Web.Models.Request
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
+    <div>
+	    <form method="POST">
+		    Title: <input name="Title" value="@Model.Title"/><br/>
+		    Description: <input name="Description" value="@Model.Description"/><br/>
+		    Address: <input name="Address" value="@Model.Address"/><br/>
+		    Tags: <input name="Tags" value="@Model.Tags"/><br/>
+		    Latitude: <input name="Latitude" value="@Model.Latitude"/><br/>
+		    Longitude: <input name="Longitude" value="@Model.Longitude"/><br/>
+		    StartDate: <input name="StartDate" type="datetime" value="@Model.StartDate"/><br/>
+		    EndDate: <input name="EndDate" type="datetime" value="@Model.EndDate"/><br/>
+		    CreatedBy: <input name="CreatedBy" value="@Model.CreatedBy"/><br/>
+			<button>Submit</button>
+	    </form>
+    </div>
+</body>
+</html>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -9,28 +10,39 @@ using System.Data.SqlClient;
 namespace CasualHeroes.Web.Controllers
 {
     public class RequestsController : Controller
-    {
-        //
-        // GET: /Requests/
+	{
+		private readonly CasualHeroesEntities db = new CasualHeroesEntities();
+
+		//
+		// GET: /Requests/?Latitude=5&Longitude=5
 
 		public ActionResult Index(double latitude, double longitude)
 		{
-			return View(ViewModels.Request.Convert(new CasualHeroesEntities().Requests
-				.Where(r => r.Latitude != null && r.Longitude != null)
-				.OrderBy(r => Math.Pow((r.Latitude.Value - latitude) * (r.Latitude.Value - latitude) + (r.Longitude.Value - longitude) * (r.Longitude.Value - longitude), 0.5))
-				.Take(10)
-			));
-        }
+			var response = new Response { Data = ViewModels.Request.Convert(
+				db.Requests
+					.Where(r => r.Latitude != null && r.Longitude != null)
+					.OrderBy(r => Math.Pow((r.Latitude.Value - latitude) * (r.Latitude.Value - latitude) + (r.Longitude.Value - longitude) * (r.Longitude.Value - longitude), 0.5))
+					.Take(10)
+				),
+			};
+			return Json(response, JsonRequestBehavior.AllowGet);
+		}
 
-        //
+		//
         // GET: /Requests/Details/5
 
         public ActionResult Details(long id)
-        {
-	        return View(ViewModels.Request.Convert(new CasualHeroesEntities().Requests.Single(r => r.RequestId == id)));
+		{
+			var request = db.Requests.Find(id);
+			if (request == null)
+			{
+				return HttpNotFound();
+			}
+	        var response = new Response { Data = ViewModels.Request.Convert(request) };
+			return Json(response, JsonRequestBehavior.AllowGet);
         }
 
-        //
+		//
         // GET: /Requests/Create
 
         public ActionResult Create()
@@ -38,89 +50,80 @@ namespace CasualHeroes.Web.Controllers
             return View();
         }
 
-        //
+		//
         // POST: /Requests/Create
 
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-	            var request = new Request
-	            {
-					Title = collection["Title"],
-					Description = collection["Description"],
-					Address = collection["Address"],
-					Tags = collection["Tags"],
-					Latitude = double.Parse(collection["Latitude"]),
-					Longitude = double.Parse(collection["Longitude"]),
-					StartDate = DateTimeOffset.Parse(collection["StartDate"]),
-					EndDate = DateTimeOffset.Parse(collection["EndDate"]),
-					CreatedBy = collection["CreatedBy"]
-	            };
+        public ActionResult Create(Request request)
+		{
+			if (ModelState.IsValid)
+			{
+				db.Requests.Add(request);
+				db.SaveChanges();
+				return Json(new Response { Data = "Added" });
+			}
 
-	            var context = new CasualHeroesEntities();
-	            context.Requests.Add(request);
-	            context.SaveChanges();
-
-                return RedirectToAction("Details", new { id = request.RequestId } );
-            }
-            catch
-            {
-				return View();
-            }
+			return Json(new Response { Data = "Failed" });
         }
 
-        //
+		//
         // GET: /Requests/Edit/5
 
-        public ActionResult Edit(int id)
-        {
-            return View();
+		public ActionResult Edit(long id = 0)
+		{
+			var request = db.Requests.Find(id);
+			if (request == null)
+			{
+				return HttpNotFound();
+			}
+			return View(request);
         }
 
-        //
+		//
         // POST: /Requests/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+		public ActionResult Edit(long id, Request request)
         {
-            try
-            {
-                // TODO: Add update logic here
+	        request.RequestId = id;
+			if (ModelState.IsValid)
+			{
+				db.Entry(request).State = EntityState.Modified;
+				db.SaveChanges();
+				return Json(new Response { Data = "Saved" });
+			}
+			return Json(new Response { Data = "Failed" });
+		}
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
         // GET: /Requests/Delete/5
-
-        public ActionResult Delete(int id)
-        {
-            return View();
+		public ActionResult Delete(long id)
+		{
+			var request = db.Requests.Find(id);
+			if (request == null)
+			{
+				return HttpNotFound();
+			}
+			return View(request);
         }
 
-        //
         // POST: /Requests/Delete/5
-
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+		[HttpPost, ActionName("Delete")]
+		public ActionResult DeleteConfirmed(long id)
+		{
+			var request = db.Requests.Find(id);
+			if (request == null)
+			{
+				return HttpNotFound();
+			}
+			db.Requests.Remove(request);
+			db.SaveChanges();
+			return Json(new Response { Data = "Deleted"} );
         }
+
+		protected override void Dispose(bool disposing)
+		{
+			db.Dispose();
+			base.Dispose(disposing);
+		}
     }
 }
