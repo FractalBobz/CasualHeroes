@@ -54,6 +54,12 @@
                 <div><label for="requestTags">Tags:</label><input id="requestTags" type="text" value=""/></div>
                 <button id="createRequest">Create Request</button>
             </fieldset>
+            
+            <fieldset>
+                <legend>Lat.Long to Address Lookup</legend>
+                <div><label for="locationLat">Lat/Long:</label><input id="locationLat" type="text" value="51.234"/><input id="locationLong" type="text" value="-0.92"/></div>
+                <button id="lookupLocation">Lookup Location</button>
+            </fieldset>
         </div>
 
     </div>
@@ -80,6 +86,7 @@
 
             $.userTable = $.mobileClient.getTable("Users");
             $.requestTable = $.mobileClient.getTable("Requests");
+            $.geocoder = new google.maps.Geocoder();
 
             function updateLatest10Requests() {
 
@@ -121,8 +128,7 @@
 
             $("#requestAddress").focusout(function() {
                 var address = $("#requestAddress").val();
-                var geocoder = new google.maps.Geocoder();
-                geocoder.geocode({ 'address': address }, function (results, status) {
+                $.geocoder.geocode({ 'address': address }, function (results, status) {
 
                     // The code below only gets run after a successful Google service call has completed.
                     // Because this is an asynchronous call, the validator has already returned a 'true' result
@@ -184,6 +190,19 @@
                 });
             });
 
+            $("#lookupLocation").click(function () {
+                                
+                var lat = parseFloat($("#locationLat").val());
+                var lng = parseFloat($("#locationLong").val());
+                var latlng = new google.maps.LatLng(lat, lng);
+                $.geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        var goodAddress = results[0].formatted_address;
+                        alert(goodAddress);
+                    }
+                });
+            });
+            
             if ($.mobileClient.currentUser !== null) {
 
                 $('#data-entry').show();
