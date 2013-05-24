@@ -27,12 +27,25 @@
       <End Role="UserTag" EntitySet="UserTags" />
       <End Role="Tag" EntitySet="Tags" />
     </AssociationSet>
+    <EntitySet Name="Ratings" EntityType="CasualHeroesModel.Rating" />
+    <AssociationSet Name="AcceptedRequestRequest" Association="CasualHeroesModel.AcceptedRequestRequest">
+      <End Role="AcceptedRequest" EntitySet="AcceptedRequests" />
+      <End Role="Request" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="AcceptedRequestUser" Association="CasualHeroesModel.AcceptedRequestUser">
+      <End Role="AcceptedRequest" EntitySet="AcceptedRequests" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="AcceptedRequest">
     <Key>
       <PropertyRef Name="AcceptedRequestId" />
     </Key>
     <Property Name="AcceptedRequestId" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="RequestId" Nullable="false" />
+    <Property Type="Int64" Name="UserId" Nullable="false" />
+    <NavigationProperty Name="Request" Relationship="CasualHeroesModel.AcceptedRequestRequest" FromRole="AcceptedRequest" ToRole="Request" />
+    <NavigationProperty Name="User" Relationship="CasualHeroesModel.AcceptedRequestUser" FromRole="AcceptedRequest" ToRole="User" />
   </EntityType>
   <EntityType Name="Request">
     <Key>
@@ -52,6 +65,7 @@
     <Property Name="CreatedOn" Type="DateTimeOffset" Precision="3" />
     <NavigationProperty Name="User" Relationship="CasualHeroesModel.UserRequest" FromRole="Request" ToRole="User" />
     <NavigationProperty Name="RequestTags" Relationship="CasualHeroesModel.RequestRequestTag" FromRole="Request" ToRole="RequestTag" />
+    <NavigationProperty Name="AcceptedRequests" Relationship="CasualHeroesModel.AcceptedRequestRequest" FromRole="Request" ToRole="AcceptedRequest" />
   </EntityType>
   <EntityType Name="RequestTag">
     <Key>
@@ -83,10 +97,11 @@
     <Property Name="LastName" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
     <Property Name="PhoneNumber" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="Requests" Relationship="CasualHeroesModel.UserRequest" FromRole="User" ToRole="Request" />
-    <Property Type="String" Name="tags" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Type="String" Name="createdBy" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Type="DateTimeOffset" Name="createdOn" Precision="3" />
+    <Property Type="String" Name="Tags" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="CreatedBy" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="DateTimeOffset" Name="CreatedOn" Precision="3" />
     <NavigationProperty Name="UserTags" Relationship="CasualHeroesModel.UserTagUser" FromRole="User" ToRole="UserTag" />
+    <NavigationProperty Name="AcceptedRequests" Relationship="CasualHeroesModel.AcceptedRequestUser" FromRole="User" ToRole="AcceptedRequest" />
   </EntityType>
   <EntityType Name="UserTag">
     <Key>
@@ -155,6 +170,36 @@
       </Principal>
       <Dependent Role="UserTag">
         <PropertyRef Name="TagId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Rating">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <Association Name="AcceptedRequestRequest">
+    <End Type="CasualHeroesModel.AcceptedRequest" Role="AcceptedRequest" Multiplicity="*" />
+    <End Type="CasualHeroesModel.Request" Role="Request" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Request">
+        <PropertyRef Name="RequestId" />
+      </Principal>
+      <Dependent Role="AcceptedRequest">
+        <PropertyRef Name="RequestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AcceptedRequestUser">
+    <End Type="CasualHeroesModel.AcceptedRequest" Role="AcceptedRequest" Multiplicity="*" />
+    <End Type="CasualHeroesModel.User" Role="User" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="AcceptedRequest">
+        <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

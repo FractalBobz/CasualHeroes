@@ -7,6 +7,7 @@
     <Schema Namespace="casualheroes_dbModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="casualheroes_dbModelStoreContainer">
           <EntitySet Name="AcceptedRequests" EntityType="casualheroes_dbModel.Store.AcceptedRequests" store:Type="Tables" Schema="casualheroes" />
+          <EntitySet Name="Ratings" EntityType="casualheroes_dbModel.Store.Ratings" store:Type="Tables" Schema="casualheroes" />
           <EntitySet Name="Requests" EntityType="casualheroes_dbModel.Store.Requests" store:Type="Tables" Schema="casualheroes" />
           <EntitySet Name="RequestTags" EntityType="casualheroes_dbModel.Store.RequestTags" store:Type="Tables" Schema="casualheroes" />
           <EntitySet Name="Tags" EntityType="casualheroes_dbModel.Store.Tags" store:Type="Tables" Schema="casualheroes" />
@@ -14,6 +15,14 @@
           <EntitySet Name="UserTags" EntityType="casualheroes_dbModel.Store.UserTags" store:Type="Tables" Schema="casualheroes" />
         </EntityContainer>
         <EntityType Name="AcceptedRequests">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="requestId" Type="bigint" />
+          <Property Name="userId" Type="bigint" />
+        </EntityType>
+        <EntityType Name="Ratings">
           <Key>
             <PropertyRef Name="id" />
           </Key>
@@ -104,12 +113,25 @@
             <End Role="UserTag" EntitySet="UserTags" />
             <End Role="Tag" EntitySet="Tags" />
           </AssociationSet>
+          <EntitySet Name="Ratings" EntityType="CasualHeroesModel.Rating" />
+          <AssociationSet Name="AcceptedRequestRequest" Association="CasualHeroesModel.AcceptedRequestRequest">
+            <End Role="AcceptedRequest" EntitySet="AcceptedRequests" />
+            <End Role="Request" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="AcceptedRequestUser" Association="CasualHeroesModel.AcceptedRequestUser">
+            <End Role="AcceptedRequest" EntitySet="AcceptedRequests" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="AcceptedRequest">
           <Key>
             <PropertyRef Name="AcceptedRequestId" />
           </Key>
           <Property Name="AcceptedRequestId" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="RequestId" Nullable="false" />
+          <Property Type="Int64" Name="UserId" Nullable="false" />
+          <NavigationProperty Name="Request" Relationship="CasualHeroesModel.AcceptedRequestRequest" FromRole="AcceptedRequest" ToRole="Request" />
+          <NavigationProperty Name="User" Relationship="CasualHeroesModel.AcceptedRequestUser" FromRole="AcceptedRequest" ToRole="User" />
         </EntityType>
         <EntityType Name="Request">
           <Key>
@@ -129,6 +151,7 @@
           <Property Name="CreatedOn" Type="DateTimeOffset" Precision="3" />
           <NavigationProperty Name="User" Relationship="CasualHeroesModel.UserRequest" FromRole="Request" ToRole="User" />
           <NavigationProperty Name="RequestTags" Relationship="CasualHeroesModel.RequestRequestTag" FromRole="Request" ToRole="RequestTag" />
+          <NavigationProperty Name="AcceptedRequests" Relationship="CasualHeroesModel.AcceptedRequestRequest" FromRole="Request" ToRole="AcceptedRequest" />
         </EntityType>
         <EntityType Name="RequestTag">
           <Key>
@@ -160,10 +183,11 @@
           <Property Name="LastName" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="PhoneNumber" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Requests" Relationship="CasualHeroesModel.UserRequest" FromRole="User" ToRole="Request" />
-          <Property Type="String" Name="tags" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="createdBy" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="DateTimeOffset" Name="createdOn" Precision="3" />
+          <Property Type="String" Name="Tags" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CreatedBy" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTimeOffset" Name="CreatedOn" Precision="3" />
           <NavigationProperty Name="UserTags" Relationship="CasualHeroesModel.UserTagUser" FromRole="User" ToRole="UserTag" />
+          <NavigationProperty Name="AcceptedRequests" Relationship="CasualHeroesModel.AcceptedRequestUser" FromRole="User" ToRole="AcceptedRequest" />
         </EntityType>
         <EntityType Name="UserTag">
           <Key>
@@ -235,6 +259,36 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Rating">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <Association Name="AcceptedRequestRequest">
+          <End Type="CasualHeroesModel.AcceptedRequest" Role="AcceptedRequest" Multiplicity="*" />
+          <End Type="CasualHeroesModel.Request" Role="Request" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Request">
+              <PropertyRef Name="RequestId" />
+            </Principal>
+            <Dependent Role="AcceptedRequest">
+              <PropertyRef Name="RequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AcceptedRequestUser">
+          <End Type="CasualHeroesModel.AcceptedRequest" Role="AcceptedRequest" Multiplicity="*" />
+          <End Type="CasualHeroesModel.User" Role="User" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="AcceptedRequest">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -244,6 +298,8 @@
           <EntitySetMapping Name="AcceptedRequests">
             <EntityTypeMapping TypeName="CasualHeroesModel.AcceptedRequest">
               <MappingFragment StoreEntitySet="AcceptedRequests">
+                <ScalarProperty Name="UserId" ColumnName="userId" />
+                <ScalarProperty Name="RequestId" ColumnName="requestId" />
                 <ScalarProperty Name="AcceptedRequestId" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -286,9 +342,9 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="CasualHeroesModel.User">
               <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="createdOn" ColumnName="createdOn" />
-                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
-                <ScalarProperty Name="tags" ColumnName="tags" />
+                <ScalarProperty Name="CreatedOn" ColumnName="createdOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="createdBy" />
+                <ScalarProperty Name="Tags" ColumnName="tags" />
                 <ScalarProperty Name="UserId" ColumnName="id" />
                 <ScalarProperty Name="Identifier" ColumnName="identifier" />
                 <ScalarProperty Name="Email" ColumnName="email" />
@@ -304,6 +360,13 @@
                 <ScalarProperty Name="TagId" ColumnName="tagId" />
                 <ScalarProperty Name="UserId" ColumnName="userId" />
                 <ScalarProperty Name="UserTagId" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ratings">
+            <EntityTypeMapping TypeName="CasualHeroesModel.Rating">
+              <MappingFragment StoreEntitySet="Ratings">
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

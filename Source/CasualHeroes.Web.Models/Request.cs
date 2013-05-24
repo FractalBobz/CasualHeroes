@@ -17,6 +17,7 @@ namespace CasualHeroes.Web.Models
         public Request()
         {
             this.RequestTags = new HashSet<RequestTag>();
+            this.AcceptedRequests = new HashSet<AcceptedRequest>();
         }
     
         public long RequestId { get; set; }
@@ -34,5 +35,6 @@ namespace CasualHeroes.Web.Models
     
         public virtual User User { get; set; }
         public virtual ICollection<RequestTag> RequestTags { get; set; }
+        public virtual ICollection<AcceptedRequest> AcceptedRequests { get; set; }
     }
 }
