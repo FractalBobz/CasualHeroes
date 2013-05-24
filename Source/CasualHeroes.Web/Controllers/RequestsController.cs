@@ -87,7 +87,7 @@ namespace CasualHeroes.Web.Controllers
 		{
 			request.CreatedOn = DateTime.UtcNow;
 			var tags = TagsSplitter.Split(db, request.Tags);
-			request.RequestTags = tags.Select(t => new RequestTag() { Request = request, Tag = t }).ToList();
+			request.RequestTags = tags.Select(t => new RequestTag { Request = request, Tag = t }).ToList();
 			if (ModelState.IsValid)
 			{
 				db.Requests.Add(request);
@@ -129,7 +129,7 @@ namespace CasualHeroes.Web.Controllers
 		{
 			request.RequestId = id;
 			var tags = TagsSplitter.Split(db, request.Tags);
-			var existingTags = db.RequestTags.Where(rt => rt.RequestId == request.RequestId).ToList();
+			var existingTags = db.RequestTags.Where(rt => rt.RequestId == request.RequestId).Where(rt => rt.Tag != null).ToList();
 			var existingTagNames = existingTags.Select(rt => rt.Tag.Name).ToList();
 			foreach (var tag in tags.Where(t => !existingTagNames.Contains(t.Name)))
 			{

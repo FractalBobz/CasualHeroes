@@ -104,7 +104,7 @@ namespace CasualHeroes.Web.Controllers
 		{
 			user.UserId = id;
 			var tags = TagsSplitter.Split(db, user.Tags);
-			var existingTags = db.UserTags.Where(ut => ut.UserId == user.UserId).ToList();
+			var existingTags = db.UserTags.Where(ut => ut.UserId == user.UserId).Where(ut => ut.Tag != null).ToList();
 			var existingTagNames = existingTags.Select(ut => ut.Tag.Name).ToList();
 			foreach (var tag in tags.Where(t => !existingTagNames.Contains(t.Name)))
 			{
