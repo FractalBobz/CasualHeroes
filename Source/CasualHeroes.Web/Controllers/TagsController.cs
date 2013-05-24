@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CasualHeroes.Web.Helpers;
 using CasualHeroes.Web.Models;
 
 namespace CasualHeroes.Web.Controllers

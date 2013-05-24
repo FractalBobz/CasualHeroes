@@ -67,6 +67,9 @@
       <DependentUpon>CasualHeroesDB.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rating.cs">
+      <DependentUpon>CasualHeroesDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Request.cs">
       <DependentUpon>CasualHeroesDB.tt</DependentUpon>
     </Compile>

@@ -18,6 +18,7 @@ namespace CasualHeroes.Web.Models
         {
             this.Requests = new HashSet<Request>();
             this.UserTags = new HashSet<UserTag>();
+            this.AcceptedRequests = new HashSet<AcceptedRequest>();
         }
     
         public long UserId { get; set; }
@@ -26,11 +27,12 @@ namespace CasualHeroes.Web.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
-        public string tags { get; set; }
-        public string createdBy { get; set; }
-        public Nullable<System.DateTimeOffset> createdOn { get; set; }
+        public string Tags { get; set; }
+        public string CreatedBy { get; set; }
+        public Nullable<System.DateTimeOffset> CreatedOn { get; set; }
     
         public virtual ICollection<Request> Requests { get; set; }
         public virtual ICollection<UserTag> UserTags { get; set; }
+        public virtual ICollection<AcceptedRequest> AcceptedRequests { get; set; }
     }
 }
