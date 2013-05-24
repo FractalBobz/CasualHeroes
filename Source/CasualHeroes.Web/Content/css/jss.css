@@ -5,7 +5,7 @@ body{margin:0;padding:0;font-family:Baskerville, Verdana, Arial, sans-serif;
 table{margin:0 auto;padding:0;border:0}ol,ul,.ml2{padding:0;margin:0;display:block;text-align:left}
 br,.cb{clear:both}img{border:0}
 nav,footer{display:block}
-footer{position:absolute;bottom:0;padding:.2em 0;background-color:rgba(0,0,0,.5)}
+footer{bottom:0;padding:.2em 0;background-color:rgba(0,0,0,.5)}
 
 .pab{position:absolute}.prl{position:relative}.pfx{position:fixed}.zero{left:0;top:0;}.zbot{left:0;bottom:0;}
 .wide{width:100%}.phi0{width:38%;}.phi1{width:62%;}.half{width:50%}.third{width:33.3%}.h1em{height:1em}
@@ -43,7 +43,7 @@ canvas, img {
 	image-rendering: -webkit-optimize-contrast;
 	image-rendering: optimize-contrast;	-ms-interpolation-mode: nearest-neighbor;
 } 
-
+input{line-height:2em;}
 button,.butlink{
 	font-weight:bold;cursor:default;
 	border:.3em solid #45f; border-radius:1.3em; line-height:2em;
