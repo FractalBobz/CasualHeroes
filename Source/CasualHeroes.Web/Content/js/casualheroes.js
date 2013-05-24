@@ -91,7 +91,7 @@ xtend('jss.hash.deal',{
 	Home:function(){ihtml('field',hero.home)},
 	Help:hero.hash,
 	Need:hero.hash,
-	Local:function(){updateLatest10Requests();},
+	Local:function(){lookAtMap()},
 	About:function(){ihtml('field',hero.c_About)}
 });
 
@@ -103,13 +103,12 @@ $.userTable = $.mobileClient.getTable("Users");
 $.requestTable = $.mobileClient.getTable("Requests");
 $.tagsTable = $.mobileClient.getTable("Tags");
 
-function updateLatest10Requests() {
+function lookAtMap() {
 	$.requestTable.orderByDescending("createdOn").take(10).read().done(function(requests) {
 		var people='';
 		for(var i=0; i<requests.length; i++) {
 			var r = requests[i],sd=r.startDate;
-			people+=r.title+" ("+sd.getHours()+":"+sd.getMinutes()+')<br>'
-			// +r.endDate;
+			people+=r.title+" ("+sd.getHours()+":"+pad(sd.getMinutes(),2,0)+')<br>'
 		}
 		ihtml("field",people);
 	});
