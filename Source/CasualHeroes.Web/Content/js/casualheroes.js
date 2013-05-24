@@ -15,7 +15,9 @@ Win.hero={
 				if(d[0]=='Help'){
 					c='ur@'+hero.lat+','+hero.lon+'<br>nobody wants your help'
 				}else if(d[0]=='Need'){
-					c='ur@'+hero.lat+','+hero.lon+'<br>Additional Details? (input here)'
+					c='ur@'+hero.lat+','+hero.lon+'<br>Additional Details?<br>'
+						+'<input type="text" class="phi1"><br>'
+						+'<div class="butlink dib m0a" data-klik="1">Done</div>'
 				}else if(d[0]=='Details')
 					return jss.ajax('/Requests/Details/'+d[1],0,"ihtml('field',a.text);");
 				else if(d[0]=='Requests')return jss.ajax('/Requests',
