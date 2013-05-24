@@ -160,9 +160,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Requests\Create.cshtml" />
-    <Content Include="Views\Requests\Edit.cshtml" />
-    <Content Include="Views\Requests\Delete.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Create.cshtml" />
@@ -178,6 +175,11 @@
     <Content Include="Views\AcceptedRequests\Create.cshtml" />
     <Content Include="Views\AcceptedRequests\Edit.cshtml" />
     <Content Include="Views\AcceptedRequests\Delete.cshtml" />
+    <Content Include="Views\Requests\Index.cshtml" />
+    <Content Include="Views\Requests\Details.cshtml" />
+    <Content Include="Views\Requests\Create.cshtml" />
+    <Content Include="Views\Requests\Edit.cshtml" />
+    <Content Include="Views\Requests\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
