@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -21,6 +22,9 @@ namespace CasualHeroes.Web.Controllers
 		{
 			var response = new Response { Data = ViewModels.Request.Convert(
 				db.Requests
+					.Include(r => r.User)
+					.Include(r => r.RequestTags)
+					.Where(r => r.EndDate > DateTime.UtcNow)
 					.Where(r => r.Latitude != null && r.Longitude != null)
 					.OrderBy(r => Math.Pow((r.Latitude.Value - latitude) * (r.Latitude.Value - latitude) + (r.Longitude.Value - longitude) * (r.Longitude.Value - longitude), 0.5))
 					.Take(10)
