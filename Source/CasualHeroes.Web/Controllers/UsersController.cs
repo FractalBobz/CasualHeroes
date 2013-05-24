@@ -19,7 +19,7 @@ namespace CasualHeroes.Web.Controllers
 
 		public ActionResult Index()
 		{
-			var response = new Response { Data = ViewModels.User.Convert(db.Users) };
+			var response = new Response { Data = ViewModels.User.Convert(db.Users.Include(u => u.Requests).Include(u => u.UserTags)) };
 			return Json(response, JsonRequestBehavior.AllowGet);
 		}
 
@@ -28,7 +28,7 @@ namespace CasualHeroes.Web.Controllers
 
 		public ActionResult Details(long id = 0)
 		{
-			User user = db.Users.Find(id);
+			var user = db.Users.Find(id);
 			if (user == null)
 			{
 				return HttpNotFound();

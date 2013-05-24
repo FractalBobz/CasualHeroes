@@ -1,0 +1,47 @@
+﻿@model IEnumerable<CasualHeroes.Web.Models.AcceptedRequest>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Request.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User.Identifier)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Request.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Identifier)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.AcceptedRequestId }) |
+                @Html.ActionLink("Details", "Details", new { id=item.AcceptedRequestId }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.AcceptedRequestId })
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>

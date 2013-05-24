@@ -17,24 +17,29 @@ namespace CasualHeroes.Web.ViewModels
 			public string Email { get; set; }
 			public string PhoneNumber { get; set; }
 
-			public RequestUser()
+			public static RequestUser Convert(Models.User user)
 			{
+				return new RequestUser
+				{
+					Tags = user.UserTags.Select(ut => ut.Tag.Name).ToList(),
+					UserId = user.UserId,
+					Identifier = user.Identifier,
+					FirstName = user.FirstName,
+					LastName = user.LastName,
+					Email = user.Email,
+					PhoneNumber = user.PhoneNumber
+				};
 			}
 
-			public RequestUser(Models.User user)
+			public static IEnumerable<RequestUser> Convert(IEnumerable<Models.User> users)
 			{
-				UserId = user.UserId;
-				Identifier = user.Identifier;
-				FirstName = user.FirstName;
-				LastName = user.LastName;
-				Email = user.Email;
-				PhoneNumber = user.PhoneNumber;
-				Tags = user.UserTags.Select(ut => ut.Tag.Name).ToList();
+				return users.ToList().Select(Convert);
 			}
 		}
 
 		public RequestUser User { get; set; }
 		public List<string> Tags { get; set; }
+		public List<RequestUser> Participants { get; set; }
 		public long RequestId { get; set; }
 		public string Title { get; set; }
 		public string Description { get; set; }
@@ -50,12 +55,13 @@ namespace CasualHeroes.Web.ViewModels
 		{
 			return new Request
 			{
-				User = request.User == null ? null : new RequestUser(request.User),
+				User = request.User == null ? null : RequestUser.Convert(request.User),
+				Tags = request.RequestTags.Select(rt => rt.Tag.Name).ToList(),
+				Participants = RequestUser.Convert(request.AcceptedRequests.Select(ar => ar.User)).ToList(),
 				RequestId = request.RequestId,
 				Title = request.Title,
 				Description = request.Description,
 				Address = request.Address,
-				Tags = request.RequestTags.Select(rt => rt.Tag.Name).ToList(),
 				Latitude = request.Latitude,
 				Longitude = request.Longitude,
 				StartDate = request.StartDate,
