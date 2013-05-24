@@ -36,7 +36,8 @@
                 <div><label for="firstName">Firstname:</label><input id="firstName" type="text" value="Joel"/></div>
                 <div><label for="lastName">Lastname:</label><input id="lastName" type="text" value="Hammond-Turner"/></div>
                 <div><label for="phoneNumber">Phone:</label><input id="phoneNumber" type="text" value="07778 367326"/></div>
-                <button id="createFirstUser">Create First User</button>
+                <div><label for="skills">Tags:</label><input id="skills" type="text" value=""/></div>
+                <button id="createUser">Create User</button>
             </fieldset>
     
             <fieldset>
@@ -45,7 +46,7 @@
                 <div><label for="requestTitle">Title:</label><input id="requestTitle" type="text" value="Help needed"/></div>
                 <div><label for="requestDescription">Description:</label><input id="requestDescription" type="text" value="Help needed to code something cool."/></div>
                 <div><label for="requestAddress">Address:</label><input id="requestAddress" type="text" value="4-5 Bonhill Street, London"/></div>
-                <div><label for="requestLatLong">Lat/Long:</label><input id="requestLat" type="text" value="123.45"/><input id="requestLong" type="text" value="123.45"/></div>
+                <div><label for="requestLat">Lat/Long:</label><input id="requestLat" type="text" value="123.45"/><input id="requestLong" type="text" value="123.45"/></div>
                 <div><label for="requestStartDate">Start Date:</label><input id="requestStartDate" type="text" value=""/></div>
                 <div><label for="requestDuration">Duration (hrs):</label><input id="requestDuration" type="text" value="1"/></div>
                 <div><label for="requestTags">Tags:</label><input id="requestTags" type="text" value=""/></div>
@@ -66,6 +67,7 @@
 
     <script src="https://casualheroes.azure-mobile.net/client/MobileServices.Web-1.0.0.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
+    <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
 
     <script type="text/javascript">
 
@@ -93,7 +95,9 @@
                 updateLatest10Requests();
             });
 
-            $("#createFirstUser").click(function () {
+         
+            $("#createUser").click(function () {
+
                 var usersEmail = $("#emailAddress").val();
                 $.userTable.where({ email: usersEmail }).read().done(function (results) {
                     if (results.length > 0) {
@@ -104,7 +108,8 @@
                             email: usersEmail,
                             firstName: $("#firstName").val(),
                             lastName: $("#lastName").val(),
-                            phoneNumber: $("#phoneNumber").val()
+                            phoneNumber: $("#phoneNumber").val(),
+                            tags: $("#skills").val()
                         };
 
                         $.userTable.insert(user).done(function () { alert("Created user!"); });
@@ -112,7 +117,34 @@
                 });
             });
 
-            $("#createRequest").click(function () {
+            $("#requestAddress").focusout(function() {
+                var address = $("#requestAddress").val();
+                var geocoder = new google.maps.Geocoder();
+                geocoder.geocode({ 'address': address }, function (results, status) {
+
+                    // The code below only gets run after a successful Google service call has completed.
+                    // Because this is an asynchronous call, the validator has already returned a 'true' result
+                    // to supress an error message and then cancelled the form submission.  The code below
+                    // needs to fetch the true validation from the Google service and then re-execute the
+                    // jQuery form validator to display the error message.  Futhermore, if the form was
+                    // being submitted, the code below needs to resume that submit.
+
+                    // Google reported a valid geocoded address
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        var goodAddress = results[0].formatted_address;
+                        $("#requestAddress").val(goodAddress);
+
+                        var location = results[0].geometry.location;
+                        var codedLatitude = location.jb;
+                        var codedLongitude = location.kb;
+
+                        $("#requestLat").val(codedLatitude);
+                        $("#requestLong").val(codedLongitude);
+                    }
+                });
+            });
+            
+            $("#createRequest").click(function() {
 
                 var usersEmail = $("#requestorEmailAddress").val();
 

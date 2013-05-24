@@ -2,7 +2,6 @@
 <Schema Namespace="CasualHeroesModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="CasualHeroesEntities" p1:LazyLoadingEnabled="true">
     <EntitySet Name="AcceptedRequests" EntityType="CasualHeroesModel.AcceptedRequest" />
-    <EntitySet Name="Ratings" EntityType="CasualHeroesModel.Rating" />
     <EntitySet Name="Requests" EntityType="CasualHeroesModel.Request" />
     <EntitySet Name="RequestTags" EntityType="CasualHeroesModel.RequestTag" />
     <EntitySet Name="Tags" EntityType="CasualHeroesModel.Tag" />
@@ -12,18 +11,28 @@
       <End Role="User" EntitySet="Users" />
       <End Role="Request" EntitySet="Requests" />
     </AssociationSet>
+    <AssociationSet Name="RequestRequestTag" Association="CasualHeroesModel.RequestRequestTag">
+      <End Role="Request" EntitySet="Requests" />
+      <End Role="RequestTag" EntitySet="RequestTags" />
+    </AssociationSet>
+    <AssociationSet Name="TagRequestTag" Association="CasualHeroesModel.TagRequestTag">
+      <End Role="Tag" EntitySet="Tags" />
+      <End Role="RequestTag" EntitySet="RequestTags" />
+    </AssociationSet>
+    <AssociationSet Name="UserTagUser" Association="CasualHeroesModel.UserTagUser">
+      <End Role="UserTag" EntitySet="UserTags" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="UserTagTag" Association="CasualHeroesModel.UserTagTag">
+      <End Role="UserTag" EntitySet="UserTags" />
+      <End Role="Tag" EntitySet="Tags" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="AcceptedRequest">
     <Key>
-      <PropertyRef Name="id" />
+      <PropertyRef Name="AcceptedRequestId" />
     </Key>
-    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-  </EntityType>
-  <EntityType Name="Rating">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="AcceptedRequestId" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
   </EntityType>
   <EntityType Name="Request">
     <Key>
@@ -42,18 +51,26 @@
     <Property Name="CreatedBy" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
     <Property Name="CreatedOn" Type="DateTimeOffset" Precision="3" />
     <NavigationProperty Name="User" Relationship="CasualHeroesModel.UserRequest" FromRole="Request" ToRole="User" />
+    <NavigationProperty Name="RequestTags" Relationship="CasualHeroesModel.RequestRequestTag" FromRole="Request" ToRole="RequestTag" />
   </EntityType>
   <EntityType Name="RequestTag">
     <Key>
-      <PropertyRef Name="id" />
+      <PropertyRef Name="RequestTagId" />
     </Key>
-    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="RequestTagId" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="RequestId" Nullable="false" />
+    <Property Type="Int64" Name="TagId" Nullable="false" />
+    <NavigationProperty Name="Request" Relationship="CasualHeroesModel.RequestRequestTag" FromRole="RequestTag" ToRole="Request" />
+    <NavigationProperty Name="Tag" Relationship="CasualHeroesModel.TagRequestTag" FromRole="RequestTag" ToRole="Tag" />
   </EntityType>
   <EntityType Name="Tag">
     <Key>
-      <PropertyRef Name="id" />
+      <PropertyRef Name="TagId" />
     </Key>
-    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="TagId" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Name" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="RequestTags" Relationship="CasualHeroesModel.TagRequestTag" FromRole="Tag" ToRole="RequestTag" />
+    <NavigationProperty Name="UserTags" Relationship="CasualHeroesModel.UserTagTag" FromRole="Tag" ToRole="UserTag" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -66,12 +83,20 @@
     <Property Name="LastName" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
     <Property Name="PhoneNumber" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="Requests" Relationship="CasualHeroesModel.UserRequest" FromRole="User" ToRole="Request" />
+    <Property Type="String" Name="tags" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="createdBy" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="DateTimeOffset" Name="createdOn" Precision="3" />
+    <NavigationProperty Name="UserTags" Relationship="CasualHeroesModel.UserTagUser" FromRole="User" ToRole="UserTag" />
   </EntityType>
   <EntityType Name="UserTag">
     <Key>
-      <PropertyRef Name="id" />
+      <PropertyRef Name="UserTagId" />
     </Key>
-    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="UserTagId" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="UserId" Nullable="false" />
+    <Property Type="Int64" Name="TagId" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="CasualHeroesModel.UserTagUser" FromRole="UserTag" ToRole="User" />
+    <NavigationProperty Name="Tag" Relationship="CasualHeroesModel.UserTagTag" FromRole="UserTag" ToRole="Tag" />
   </EntityType>
   <Association Name="UserRequest">
     <End Type="CasualHeroesModel.User" Role="User" Multiplicity="1" />
@@ -82,6 +107,54 @@
       </Principal>
       <Dependent Role="Request">
         <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RequestRequestTag">
+    <End Type="CasualHeroesModel.Request" Role="Request" Multiplicity="1" />
+    <End Type="CasualHeroesModel.RequestTag" Role="RequestTag" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Request">
+        <PropertyRef Name="RequestId" />
+      </Principal>
+      <Dependent Role="RequestTag">
+        <PropertyRef Name="RequestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TagRequestTag">
+    <End Type="CasualHeroesModel.Tag" Role="Tag" Multiplicity="1" />
+    <End Type="CasualHeroesModel.RequestTag" Role="RequestTag" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tag">
+        <PropertyRef Name="TagId" />
+      </Principal>
+      <Dependent Role="RequestTag">
+        <PropertyRef Name="TagId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserTagUser">
+    <End Type="CasualHeroesModel.UserTag" Role="UserTag" Multiplicity="*" />
+    <End Type="CasualHeroesModel.User" Role="User" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserTag">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserTagTag">
+    <End Type="CasualHeroesModel.UserTag" Role="UserTag" Multiplicity="*" />
+    <End Type="CasualHeroesModel.Tag" Role="Tag" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Tag">
+        <PropertyRef Name="TagId" />
+      </Principal>
+      <Dependent Role="UserTag">
+        <PropertyRef Name="TagId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

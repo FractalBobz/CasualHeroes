@@ -9,11 +9,11 @@ namespace CasualHeroes.Web.ViewModels
 	{
 		public class UserRequest
 		{
+			public List<string> Tags { get; set; } 
 			public long RequestId { get; set; }
 			public string Title { get; set; }
 			public string Description { get; set; }
 			public string Address { get; set; }
-			public string Tags { get; set; }
 			public double? Latitude { get; set; }
 			public double? Longitude { get; set; }
 			public DateTimeOffset? StartDate { get; set; }
@@ -30,7 +30,7 @@ namespace CasualHeroes.Web.ViewModels
 					Title = request.Title,
 					Description = request.Description,
 					Address = request.Address,
-					Tags = request.Tags,
+					Tags = request.RequestTags.Select(rt => rt.Tag.Name).ToList(),
 					Latitude = request.Latitude,
 					Longitude = request.Longitude,
 					StartDate = request.StartDate,
@@ -47,6 +47,8 @@ namespace CasualHeroes.Web.ViewModels
 			}
 		}
 
+		public List<UserRequest> Requests { get; set; }
+		public List<string> Tags { get; set; }
 		public long UserId { get; set; }
 		public string Identifier { get; set; }
 		public string FirstName { get; set; }
@@ -54,7 +56,6 @@ namespace CasualHeroes.Web.ViewModels
 		public string Email { get; set; }
 		public string PhoneNumber { get; set; }
 		public string DetailsUrl { get; set; }
-		public List<UserRequest> Requests { get; set; }
 
 		public static User Convert(Models.User user)
 		{
@@ -67,7 +68,8 @@ namespace CasualHeroes.Web.ViewModels
 				Email = user.Email,
 				PhoneNumber = user.PhoneNumber,
 				DetailsUrl = "/Users/Details/" + user.UserId,
-				Requests = UserRequest.Convert(user.Requests).ToList()
+				Requests = UserRequest.Convert(user.Requests).ToList(),
+				Tags = user.UserTags.Select(ut => ut.Tag.Name).ToList()
 			};
 		}
 

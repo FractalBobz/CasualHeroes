@@ -4,14 +4,7 @@
     <EntitySetMapping Name="AcceptedRequests">
       <EntityTypeMapping TypeName="CasualHeroesModel.AcceptedRequest">
         <MappingFragment StoreEntitySet="AcceptedRequests">
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Ratings">
-      <EntityTypeMapping TypeName="CasualHeroesModel.Rating">
-        <MappingFragment StoreEntitySet="Ratings">
-          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="AcceptedRequestId" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -36,20 +29,26 @@
     <EntitySetMapping Name="RequestTags">
       <EntityTypeMapping TypeName="CasualHeroesModel.RequestTag">
         <MappingFragment StoreEntitySet="RequestTags">
-          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="TagId" ColumnName="tagId" />
+          <ScalarProperty Name="RequestId" ColumnName="requestId" />
+          <ScalarProperty Name="RequestTagId" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Tags">
       <EntityTypeMapping TypeName="CasualHeroesModel.Tag">
         <MappingFragment StoreEntitySet="Tags">
-          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Name" ColumnName="tagName" />
+          <ScalarProperty Name="TagId" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="CasualHeroesModel.User">
         <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="createdOn" ColumnName="createdOn" />
+          <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+          <ScalarProperty Name="tags" ColumnName="tags" />
           <ScalarProperty Name="UserId" ColumnName="id" />
           <ScalarProperty Name="Identifier" ColumnName="identifier" />
           <ScalarProperty Name="Email" ColumnName="email" />
@@ -62,7 +61,9 @@
     <EntitySetMapping Name="UserTags">
       <EntityTypeMapping TypeName="CasualHeroesModel.UserTag">
         <MappingFragment StoreEntitySet="UserTags">
-          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="TagId" ColumnName="tagId" />
+          <ScalarProperty Name="UserId" ColumnName="userId" />
+          <ScalarProperty Name="UserTagId" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

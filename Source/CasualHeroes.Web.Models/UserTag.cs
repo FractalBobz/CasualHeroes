@@ -14,6 +14,11 @@ namespace CasualHeroes.Web.Models
     
     public partial class UserTag
     {
-        public long id { get; set; }
+        public long UserTagId { get; set; }
+        public long UserId { get; set; }
+        public long TagId { get; set; }
+    
+        public virtual User User { get; set; }
+        public virtual Tag Tag { get; set; }
     }
 }
