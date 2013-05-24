@@ -1,5 +1,5 @@
 Win.hero={
-	iam:'James',email:'james.counihan@evenbase.com',lat:0,lon:0,
+	iam:lS('name'),email:lS('email'),lat:0,lon:0,
 	skills:['Manual Dexterity','Moral Support','Technical Expertise','Transport','Food & Drink'],
 	hash:function(){
 		var a=jss.hash,b=(a.place||'Home').ux(),c='',d=b.split('/');
@@ -61,20 +61,31 @@ Win.hero={
 			}
 		});
 	},
+	checkMe:function() {
+		$.userTable.where({ email: hero.email }).read().done(function(results) {
+			if (results.length!=1)return;
+			var r=results[0];
+			lS('name',r.fname+' '+r.sname);
+			lS('email',r.email);
+		});
+	},
 	newUser:function() {
 		var email=fval('email'),sname=fval('name').split(' '),fname=sname.shift();
 		sname=sname.join(' ');
 		$.userTable.where({ email: email }).read().done(function(results) {
 			if (results.length > 0) {
-					ihtml('field',"User " + email + " already exists!");
+					ihtml('field',"You have somehow failed.");
 			} else {
 				var user = {
+					tags: jss.hash.place.split('/')[1],
 					identifier: randy(99999),
 					firstName: fname, lastName: sname,
 					email: email, phoneNumber: fval('phone')
 				};
 				$.userTable.insert(user).done(function () {
-					ihtml('field',"Created user!"); 
+					hero.iam=fval('name');
+					hero.email=email;
+					ihtml('field',"Created user! Go back and try again."); 
 				});
 			}
 		});
